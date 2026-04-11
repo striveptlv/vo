@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gaze Stability Exercise</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app-shell">
+    <header id="hero-banner" class="hero">
+      <p class="eyebrow">STRIVE PHYSICAL THERAPY LAS VEGAS: VESTIBULAR REHAB TOOL</p>
+      <h1>Gaze Stability Exercise</h1>
+      <p class="hero-copy">Set the pace, guide the patient through up to three sets, then generate a SOAP-style note from the completed session.</p>
+    </header>
+
+    <section id="setup-screen" class="screen active card">
+      <div class="section-heading">
+        <div>
+          <p class="step-label">Session Setup</p>
+          <h2>Configure the next set</h2>
+        </div>
+        <div class="set-chip">Set <span id="set-number">1</span> of 3</div>
+      </div>
+
+      <div class="grid two-up">
+        <label class="field">
+          <span>Speed</span>
+          <div class="range-wrap">
+            <input id="bpm" type="range" min="30" max="180" step="1" value="60">
+            <strong><span id="bpm-value">60</span> BPM</strong>
+          </div>
+        </label>
+
+        <label class="field">
+          <span>Duration</span>
+          <div class="range-wrap">
+            <input id="duration" type="range" min="15" max="120" step="1" value="30">
+            <strong><span id="duration-value">30</span> seconds</strong>
+          </div>
+        </label>
+      </div>
+
+      <div class="grid three-up">
+        <label class="field">
+          <span>Movement Plane</span>
+          <select id="plane">
+            <option value="Horizontal">Horizontal</option>
+            <option value="Vertical">Vertical</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span>Patient Position</span>
+          <select id="position">
+            <option value="Sitting">Sitting</option>
+            <option value="Standing">Standing</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span>Surface</span>
+          <select id="surface">
+            <option value="Firm">Firm</option>
+            <option value="Compliant">Compliant</option>
+            <option value="Moving">Moving</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="grid two-up">
+        <label class="toggle-card">
+          <div>
+            <span class="toggle-title">Audible Metronome</span>
+            <p>Play a short beep on each beat.</p>
+          </div>
+          <input id="beep-enabled" type="checkbox" checked>
+        </label>
+
+        <div class="summary-card">
+          <span>Preview</span>
+          <p id="setup-preview">Horizontal head turns for 30 seconds at 60 BPM.</p>
+        </div>
+      </div>
+
+      <div class="button-row">
+        <button id="start-button" class="primary">Start Set</button>
+        <button id="generate-early-button" class="secondary" disabled>Finish Early and Generate Note</button>
+      </div>
+    </section>
+
+    <section id="countdown-screen" class="screen card countdown-screen" aria-live="polite">
+      <p class="step-label">Get Ready</p>
+      <div id="countdown-number" class="countdown-number">3</div>
+      <p id="countdown-summary" class="countdown-summary"></p>
+    </section>
+
+    <section id="exercise-screen" class="screen exercise-screen" aria-live="polite">
+      <div class="session-topbar">
+        <div class="metric">
+          <span>Set</span>
+          <strong id="live-set-number">1</strong>
+        </div>
+        <div class="metric">
+          <span>Time Left</span>
+          <strong id="time-remaining">00:30</strong>
+        </div>
+        <div class="metric">
+          <span>Tempo</span>
+          <strong id="live-bpm">60 BPM</strong>
+        </div>
+      </div>
+
+      <div class="target-stage">
+        <div class="target-ring ring-outer"></div>
+        <div class="target-ring ring-middle"></div>
+        <div class="target-ring ring-inner"></div>
+        <div class="target-center"></div>
+      </div>
+
+      <div class="session-instructions">
+        <p id="instruction-line">Keep eyes on the center target while moving the head.</p>
+        <p id="meta-line">Horizontal | Sitting on firm surface</p>
+      </div>
+
+      <div class="button-row center">
+        <button id="end-set-button" class="secondary">End Set Early</button>
+      </div>
+    </section>
+
+    <section id="rating-screen" class="screen card">
+      <div class="section-heading">
+        <div>
+          <p class="step-label">Post-Set Rating</p>
+          <h2>How dizzy does the patient feel?</h2>
+        </div>
+      </div>
+
+      <div class="rating-visual">
+        <div id="selected-rating" class="selected-rating">Select 0-10</div>
+        <p>0 = no dizziness, 10 = worst dizziness</p>
+      </div>
+
+      <div id="rating-grid" class="rating-grid" role="radiogroup" aria-label="Dizziness rating"></div>
+
+      <div class="button-row">
+        <button id="save-rating-button" class="primary" disabled>Save Rating</button>
+      </div>
+    </section>
+
+    <section id="documentation-screen" class="screen card">
+      <div class="section-heading">
+        <div>
+          <p class="step-label">Documentation</p>
+          <h2>SOAP-style session summary</h2>
+        </div>
+      </div>
+
+      <div class="documentation-actions">
+        <div class="doc-stat">
+          <span>Completed Sets</span>
+          <strong id="completed-count">0</strong>
+        </div>
+        <button id="restart-button" class="secondary">Start New Session</button>
+      </div>
+
+      <textarea id="soap-note" readonly></textarea>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
