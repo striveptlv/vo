@@ -420,48 +420,42 @@
         <p class="eyebrow">STRIVE Physical Therapy | Las Vegas</p>
         <h1>Vestibular Rehabilitation</h1>
         <p class="lead">
-          This program gives patients and clients a safe way to practice financial management,
-          app navigation, computer use, typing, multi-tasking, divided attention, and managing
-          distraction while completing realistic online tasks. These activities support improved
-          independence and safety with IADLs, especially for people recovering after a stroke or
-          brain injury.
+          This vestibular rehabilitation tool is designed to support recovery from dizziness, vertigo, and balance disorders through guided, 
+          evidence-based exercises. It allows clinicians and patients to safely practice gaze stabilization, balance training, and motion tolerance 
+          activities in a structured, user-friendly format. With adjustable difficulty levels and real-world simulations, the tool helps bridge the
+          gap between clinic and daily life—promoting confidence, independence, and functional recovery.
         </p>
         <div class="info-strip">
           <p>
-            Choose one of the practice environments below to work on logging in, locating account
-            details, switching attention between screens, following task steps, and completing
-            functional payment or banking activities.
+            Choose one of the practice practice and exercise focus.
           </p>
         </div>
       </section>
 
       <section class="launch-grid" aria-label="Practice program launch options">
         <article class="card">
-          <span class="label utility">Mock Electric Bill</span>
-          <h2>Bill Pay Simulation</h2>
+          <span class="label utility">Vestibular Rehab</span>
+          <h2>VOR: Gaze Stability Exercises</h2>
           <p>
-            Opens the bill-pay practice homepage for utility payment tasks with realistic account
-            navigation and payment workflow practice.
+            Vestibular-Ocualr Reflex Exercises
           </p>
           <a class="launch-link utility" href="./Bill%20Pay/Bill%20Pay%20Homepage.html">Begin Bill Pay Simulation</a>
         </article>
 
         <article class="card">
-          <span class="label credit">Mock Credit Card</span>
-          <h2>Credit Card Account Simulation</h2>
+          <span class="label credit">Vestibular Rehab</span>
+          <h2>Smooth Pursuits Exercises</h2>
           <p>
-            Opens the Visa credit practice homepage to support card management tasks, online form
-            completion, and attention to details across multiple screens.
+            Various levels of distraction.
           </p>
           <a class="launch-link credit" href="./Visa/Visa%20Credit%20Homepage.html">Begin Credit Card Simulation</a>
         </article>
 
         <article class="card">
-          <span class="label bank">Mock Credit Union</span>
-          <h2>Online Bank Simulation</h2>
+          <span class="label bank">Vestibular Rehabilitaiton</span>
+          <h2>Saccades Exercises</h2>
           <p>
-            Opens the credit union banking simulation for personal account practice, navigation,
-            account review, and everyday money management skills.
+            Horizontal and Vertical Saccades
           </p>
           <a class="launch-link bank" href="./Credit%20Union%20Account/Las%20Vegas%20School%20District%20Credit%20Union%20Homepage.html">Begin Online Banking Simulation</a>
         </article>
