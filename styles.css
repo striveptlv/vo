@@ -151,7 +151,7 @@ input[type="range"],
 select,
 button,
 textarea {
-  font: inherit;
+  font: Avenir Next Condensed;
 }
 
 select {
