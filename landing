@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STRIVE Physical Therapy Vestibular Rehabilitation </title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vestibular Rehabilitation</title>
+    <style>
+      :root {
+        --ink: #183153;
+        --muted: #5f6f85;
+        --surface: rgba(255, 255, 255, 0.9);
+        --line: rgba(24, 49, 83, 0.12);
+        --shadow: 0 24px 48px rgba(24, 49, 83, 0.14);
+        --navy: #214a7a;
+        --navy-deep: #163456;
+        --sage: #5d8b6f;
+        --sage-deep: #41614e;
+        --gold: #d2a54b;
+        --gold-deep: #9a7428;
+        --cream: #f6f2e8;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: "Avenir Next", Avenir, "Segoe UI", sans-serif;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at top left, rgba(33, 74, 122, 0.18), transparent 24%),
+          radial-gradient(circle at top right, rgba(210, 165, 75, 0.18), transparent 20%),
+          radial-gradient(circle at bottom left, rgba(93, 139, 111, 0.16), transparent 24%),
+          linear-gradient(180deg, #fbfcfe 0%, #edf3f8 54%, #e7eef5 100%);
+      }
+
+      a {
+        color: inherit;
+      }
+
+      .page {
+        width: min(1120px, calc(100% - 32px));
+        margin: 0 auto;
+        padding: 34px 0 42px;
+      }
+
+      .hero,
+      .card,
+      .footer {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 30px;
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(16px);
+      }
+
+      .hero {
+        padding: 34px;
+      }
+
+      .eyebrow {
+        margin: 0 0 10px;
+        font-size: 0.78rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      h1,
+      h2,
+      p {
+        margin-top: 0;
+      }
+
+      h1 {
+        margin-bottom: 12px;
+        font-size: clamp(2rem, 5vw, 3.6rem);
+        letter-spacing: -0.04em;
+      }
+
+      .lead {
+        max-width: 760px;
+        font-size: 1.08rem;
+        line-height: 1.7;
+        color: var(--muted);
+      }
+
+      .info-strip {
+        margin-top: 22px;
+        padding: 18px 20px;
+        border-radius: 22px;
+        background: linear-gradient(135deg, rgba(246, 242, 232, 0.95), rgba(255, 255, 255, 0.72));
+        border: 1px solid rgba(210, 165, 75, 0.24);
+      }
+
+      .info-strip p {
+        margin: 0;
+        line-height: 1.7;
+      }
+
+      .launch-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 22px;
+        margin-top: 24px;
+      }
+
+      .card {
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .label {
+        display: inline-flex;
+        align-items: center;
+        padding: 8px 12px;
+        border-radius: 999px;
+        font-size: 0.78rem;
+        font-weight: 800;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: #fff;
+      }
+
+      .label.utility {
+        background: linear-gradient(135deg, var(--gold), var(--gold-deep));
+      }
+
+      .label.credit {
+        background: linear-gradient(135deg, var(--navy), var(--navy-deep));
+      }
+
+      .label.bank {
+        background: linear-gradient(135deg, var(--sage), var(--sage-deep));
+      }
+
+      .card h2 {
+        margin: 16px 0 10px;
+        font-size: 1.45rem;
+      }
+
+      .card p {
+        margin-bottom: 22px;
+        line-height: 1.65;
+        color: var(--muted);
+        flex: 1;
+      }
+
+      .launch-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        padding: 14px 18px;
+        border-radius: 16px;
+        text-decoration: none;
+        font-weight: 800;
+        color: #fff;
+        transition: transform 160ms ease, box-shadow 160ms ease;
+      }
+
+      .launch-link:hover {
+        transform: translateY(-1px);
+      }
+
+      .launch-link.utility {
+        background: linear-gradient(135deg, var(--gold), var(--gold-deep));
+        box-shadow: 0 14px 28px rgba(154, 116, 40, 0.22);
+      }
+
+      .launch-link.credit {
+        background: linear-gradient(135deg, var(--navy), var(--navy-deep));
+        box-shadow: 0 14px 28px rgba(22, 52, 86, 0.24);
+      }
+
+      .launch-link.bank {
+        background: linear-gradient(135deg, var(--sage), var(--sage-deep));
+        box-shadow: 0 14px 28px rgba(65, 97, 78, 0.24);
+      }
+
+      .footer {
+        margin-top: 24px;
+        padding: 20px 24px;
+        text-align: center;
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+
+      @media (max-width: 900px) {
+        .launch-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .page {
+          width: min(100% - 20px, 1120px);
+          padding-top: 20px;
+          padding-bottom: 28px;
+        }
+
+        .hero,
+        .card,
+        .footer {
+          border-radius: 24px;
+        }
+
+        .hero,
+        .card {
+          padding: 22px;
+        }
+      }
+  /* ── PATIENT RESOURCE DROPDOWN ── */
+.mob-dropdown { border-bottom: 1px solid rgba(255,255,255,0.06); }
+.mob-dropdown-toggle {
+  display: flex; justify-content: space-between; align-items: center;
+  color: rgba(255,255,255,0.85); font-size: 18px;
+  font-family: 'Cormorant Garamond', serif; font-weight: 300;
+  padding: 16px 0; cursor: pointer;
+}
+.mob-arrow {
+  font-size: 22px; color: #2faa5e; display: inline-block; transition: transform 0.25s;
+}
+.mob-arrow.open { transform: rotate(90deg); }
+.mob-dropdown-items { display: none; flex-direction: column; padding-left: 16px; }
+.mob-dropdown-items.open { display: flex; }
+.mob-dropdown-items a {
+  font-size: 15px !important; padding: 12px 0 !important;
+  border-bottom: 1px solid rgba(255,255,255,0.04) !important;
+  color: rgba(255,255,255,0.6) !important;
+}
+.mob-dropdown-items a:last-child { border-bottom: none !important; }
+
+      .nav-dropdown { position: relative; display: flex; align-items: center; }
+.nav-dropdown > a { display: flex; align-items: center; gap: 5px; padding: 24px 0; }
+.nav-dropdown > a::after {
+  content: ''; display: inline-block; width: 0; height: 0;
+  border-left: 4px solid transparent; border-right: 4px solid transparent;
+  border-top: 5px solid rgba(255,255,255,0.55); transition: transform 0.2s;
+}
+.nav-dropdown:hover > a { color: var(--green-light); }
+.nav-dropdown:hover > a::after { transform: rotate(180deg); border-top-color: var(--green-light); }
+.dropdown-menu {
+  opacity: 0; pointer-events: none;
+  position: absolute; top: 100%; right: 0;
+  background: #133022;
+  border: 1px solid rgba(30,138,74,0.25);
+  border-radius: 4px; min-width: 190px; overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.35); transition: opacity 0.15s;
+}
+.nav-dropdown:hover .dropdown-menu { opacity: 1; pointer-events: auto; }
+.dropdown-menu a {
+  display: block; color: rgba(255,255,255,0.72); font-size: 13.5px;
+  padding: 11px 18px; border-bottom: 1px solid rgba(255,255,255,0.05);
+  transition: background 0.15s, color 0.15s; white-space: nowrap;
+}
+.dropdown-menu a:last-child { border-bottom: none; }
+.dropdown-menu a:hover { background: rgba(30,138,74,0.15); color: #2faa5e; }
+
+/* ══ DONATION BANNER ══ */
+@keyframes donate-hb { 0%,100%{transform:scale(1)} 30%{transform:scale(1.18)} 60%{transform:scale(1.08)} }
+@keyframes donate-pulse { 0%{transform:scale(0.85);opacity:0.6} 100%{transform:scale(1.5);opacity:0} }
+
+.donate-card {
+  background: #0d2118;
+  border: 1px solid rgba(30,138,74,0.3);
+  border-radius: 30px;
+  box-shadow: var(--shadow);
+  padding: 36px 40px;
+  display: flex; align-items: center; gap: 36px;
+  position: relative; overflow: hidden;
+}
+.donate-card::before {
+  content: '';
+  position: absolute; top: -60px; right: -60px;
+  width: 240px; height: 240px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(30,138,74,0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+.donate-heart-wrap {
+  position: relative; flex-shrink: 0;
+  width: 80px; height: 80px;
+  display: flex; align-items: center; justify-content: center;
+}
+.donate-pulse-ring {
+  position: absolute; inset: 0; border-radius: 50%;
+  border: 2px solid rgba(30,138,74,0.5);
+  animation: donate-pulse 2s ease-out infinite;
+}
+.donate-pulse-ring-2 {
+  position: absolute; inset: 0; border-radius: 50%;
+  border: 2px solid rgba(30,138,74,0.3);
+  animation: donate-pulse 2s ease-out infinite 0.7s;
+}
+.donate-heart-bg {
+  width: 80px; height: 80px; border-radius: 50%;
+  background: rgba(30,138,74,0.18);
+  border: 1px solid rgba(30,138,74,0.35);
+  display: flex; align-items: center; justify-content: center;
+}
+.donate-heart-svg { animation: donate-hb 1.6s ease-in-out infinite; }
+.donate-eyebrow {
+  font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase;
+  color: #2faa5e; font-weight: 500; margin-bottom: 6px;
+}
+.donate-card h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.6rem; font-weight: 400; color: white;
+  margin: 0 0 8px; line-height: 1.25;
+}
+.donate-card p {
+  font-size: 13.5px; color: rgba(255,255,255,0.48);
+  line-height: 1.75; margin: 0; max-width: 420px;
+}
+.donate-text { flex: 1; }
+.donate-actions {
+  display: flex; flex-direction: column;
+  gap: 10px; min-width: 190px; flex-shrink: 0;
+}
+.donate-btn {
+  display: block; padding: 13px 24px; border-radius: 4px;
+  text-decoration: none; font-size: 14px; font-weight: 500;
+  color: white; text-align: center;
+  background: #1e8a4a; transition: background 0.2s;
+}
+.donate-btn:hover { background: #2faa5e; }
+.donate-btn-alt {
+  display: block; padding: 11px 24px; border-radius: 4px;
+  text-decoration: none; font-size: 13px; font-weight: 400;
+  color: rgba(255,255,255,0.55); text-align: center;
+  border: 1px solid rgba(30,138,74,0.35);
+  transition: border-color 0.2s, color 0.2s;
+}
+.donate-btn-alt:hover { border-color: #2faa5e; color: rgba(255,255,255,0.9); }
+.donate-note {
+  font-size: 11px; color: rgba(255,255,255,0.50);
+  text-align: center; margin-top: 2px;
+}
+@media (max-width: 960px) {
+  .donate-card { flex-direction: column; text-align: center; padding: 28px 22px; gap: 24px; }
+  .donate-actions { min-width: unset; width: 100%; }
+  .donate-card p { max-width: unset; }
+}
+      
+    </style>
+  </head>
+
+<!-- ══════════════════════════════════════════════════
+     NAV
+     All links point to the main STRIVE PT website.
+     Update the base URL below if the domain changes.
+════════════════════════════════════════════════════ -->
+<nav>
+  <a href="https://striveptlv.com" class="nav-logo">
+    <img src="https://striveptlv.com/logo.png" alt="STRIVE PT Logo" class="logo-img">
+    <div>
+      <div class="logo-text">STRIVE</div>
+      <div class="logo-sub">Physical Therapy · Las Vegas</div>
+    </div>
+  </a>
+
+  <div class="nav-links">
+    <a href="https://striveptlv.com/">Home</a>
+    <a href="https://striveptlv.com/#services">Services</a>
+    <a href="https://striveptlv.com/#difference">Why 1-on-1</a>
+    <a href="https://striveptlv.com/#providers">Our Team</a>
+    <a href="https://striveptlv.com/#faq">FAQ</a>
+    <a href="https://striveptlv.com/#contact">Contact</a>
+   <div class="nav-dropdown">
+  <a href="#">Patient Resource</a>
+  <div class="dropdown-menu">
+    <a href="https://striveptlv.com/moneymanagement/">Online Bank Simulator</a>
+    <a href="http://www.striveptlv.com/toolsneuropt/">Vestibular Tools</a>
+    <a href="https://striveptlv.com/patient-resource/">Home Modifications</a>
+  </div>
+</div>
+    <a href="https://striveptlv.com/" class="nav-book">Book Now</a>
+  </div>
+
+  <div class="nav-toggle" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+ 
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="https://striveptlv.com" onclick="toggleMenu()">Home</a>
+  <a href="https://striveptlv.com/#services" onclick="toggleMenu()">Services</a>
+  <a href="https://striveptlv.com/#difference" onclick="toggleMenu()">Why 1-on-1</a>
+  <a href="https://striveptlv.com/#providers" onclick="toggleMenu()">Our Team</a>
+  <a href="https://striveptlv.com/#faq" onclick="toggleMenu()">FAQ</a>
+  <a href="https://striveptlv.com/#contact" onclick="toggleMenu()">Contact</a>
+  <div class="mob-dropdown">
+  <div class="mob-dropdown-toggle" onclick="togglePatientResource()">
+    Patient Resource <span class="mob-arrow">›</span>
+  </div>
+  <div class="mob-dropdown-items" id="patientResourceItems">
+    <a href="https://striveptlv.com/moneymanagement/" onclick="toggleMenu()">Money Management</a>
+    <a href="http://www.striveptlv.com/toolsneuropt/">Vestibular Tools</a>
+    <a href="https://striveptlv.com/patient-resource/" onclick="toggleMenu()">Home Modifications</a>
+  </div>
+</div>
+  <a href="https://striveptlv.com/#booking" class="mob-book" onclick="toggleMenu()">Book an Appointment</a>
+</div>
+ 
+<div class="page-content">
+    <body>
+    <main class="page">
+      <section class="hero">
+        <p class="eyebrow">STRIVE Physical Therapy | Las Vegas</p>
+        <h1>Vestibular Rehabilitation</h1>
+        <p class="lead">
+          This program gives patients and clients a safe way to practice financial management,
+          app navigation, computer use, typing, multi-tasking, divided attention, and managing
+          distraction while completing realistic online tasks. These activities support improved
+          independence and safety with IADLs, especially for people recovering after a stroke or
+          brain injury.
+        </p>
+        <div class="info-strip">
+          <p>
+            Choose one of the practice environments below to work on logging in, locating account
+            details, switching attention between screens, following task steps, and completing
+            functional payment or banking activities.
+          </p>
+        </div>
+      </section>
+
+      <section class="launch-grid" aria-label="Practice program launch options">
+        <article class="card">
+          <span class="label utility">Mock Electric Bill</span>
+          <h2>Bill Pay Simulation</h2>
+          <p>
+            Opens the bill-pay practice homepage for utility payment tasks with realistic account
+            navigation and payment workflow practice.
+          </p>
+          <a class="launch-link utility" href="./Bill%20Pay/Bill%20Pay%20Homepage.html">Begin Bill Pay Simulation</a>
+        </article>
+
+        <article class="card">
+          <span class="label credit">Mock Credit Card</span>
+          <h2>Credit Card Account Simulation</h2>
+          <p>
+            Opens the Visa credit practice homepage to support card management tasks, online form
+            completion, and attention to details across multiple screens.
+          </p>
+          <a class="launch-link credit" href="./Visa/Visa%20Credit%20Homepage.html">Begin Credit Card Simulation</a>
+        </article>
+
+        <article class="card">
+          <span class="label bank">Mock Credit Union</span>
+          <h2>Online Bank Simulation</h2>
+          <p>
+            Opens the credit union banking simulation for personal account practice, navigation,
+            account review, and everyday money management skills.
+          </p>
+          <a class="launch-link bank" href="./Credit%20Union%20Account/Las%20Vegas%20School%20District%20Credit%20Union%20Homepage.html">Begin Online Banking Simulation</a>
+        </article>
+      </section>
+
+      <footer class="footer">Created by Strive Physical Therapy.<br>© 2026 STRIVE Physical Therapy · Las Vegas, NV · All rights reserved.</footer>
+    </main>
+  </body>
+
+<style>
+  /* ── RESET & BASE ── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #f6fbf7;
+    color: #0d2118;
+    overflow-x: hidden;
+    /* Push body content below fixed nav */
+    padding-top: 70px;
+  }
+ 
+  /* ── DESIGN TOKENS ── */
+  :root {
+    --forest:      #0d2118;
+    --green:       #1e8a4a;
+    --green-light: #2faa5e;
+    --green-pale:  #e8f5ee;
+    --gold:        #c9973a;
+    --cream:       #f2f7f4;
+    --warm-white:  #f6fbf7;
+    --text-dark:   #0d2118;
+    --text-mid:    #2e5040;
+    --text-light:  #5a7a68;
+  }
+ 
+  /* ══════════════════════════════════════
+     NAV
+  ══════════════════════════════════════ */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+    background: rgba(13,33,24,0.97);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(30,138,74,0.25);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5vw; height: 70px;
+  }
+ 
+  /* Logo */
+  .nav-logo {
+    display: flex; align-items: center; gap: 11px;
+    text-decoration: none;
+  }
+  ./* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+    background: rgba(13,33,24,0.97); backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(30,138,74,0.25);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5vw; height: 70px;
+  }
+  .nav-logo { display: flex; align-items: center; gap: 11px; text-decoration: none; }
+  .logo-img {
+  width: 50px; height: 50px;
+  object-fit: contain; flex-shrink: 0;
+}
+.logo-text { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600; color: white; line-height: 1.1; letter-spacing: 2px; }
+.logo-sub { font-size: 9.5px; font-family: 'DM Sans', sans-serif; color: var(--green-light); font-weight: 300; letter-spacing: 2.5px; text-transform: uppercase; }
+.nav-links { display: flex; align-items: center; gap: 26px; }
+.nav-links a { color: rgba(255,255,255,0.72); text-decoration: none; font-size: 13.5px; letter-spacing: 0.3px; transition: color 0.2s; }
+.nav-links a:hover { color: var(--green-light); }
+.nav-book { background: var(--green) !important; color: white !important; padding: 9px 22px; border-radius: 2px; font-weight: 500 !important; transition: background 0.2s !important; }
+.nav-book:hover { background: var(--green-light) !important; }
+.nav-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+.nav-toggle span { width: 22px; height: 2px; background: white; border-radius: 2px; }
+  /* MOBILE MENU */
+  .mobile-menu { display: none; flex-direction: column; position: fixed; top: 70px; left: 0; right: 0; bottom: 0; background: var(--forest); z-index: 199; padding: 32px 6vw; }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a { color: rgba(255,255,255,0.85); text-decoration: none; font-size: 18px; font-family: 'Cormorant Garamond', serif; font-weight: 300; padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .mob-book { background: var(--green); color: white !important; text-align: center; border-radius: 2px; padding: 15px !important; margin-top: 24px; border: none !important; font-size: 16px; }
+
+  .logo-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px; font-weight: 600; color: white;
+    line-height: 1.1; letter-spacing: 2px;
+  }
+  .logo-sub {
+    font-size: 9.5px; font-family: 'DM Sans', sans-serif;
+    color: var(--green-light); font-weight: 300;
+    letter-spacing: 2.5px; text-transform: uppercase;
+  }
+ 
+  /* Desktop links */
+  .nav-links {
+    display: flex; align-items: center; gap: 26px;
+  }
+  .nav-links a {
+    color: rgba(255,255,255,0.72); text-decoration: none;
+    font-size: 13.5px; letter-spacing: 0.3px;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--green-light); }
+  .nav-book {
+    background: var(--green) !important;
+    color: white !important;
+    padding: 9px 22px; border-radius: 2px;
+    font-weight: 500 !important;
+    transition: background 0.2s !important;
+  }
+  .nav-book:hover { background: var(--green-light) !important; }
+ 
+  /* Hamburger */
+  .nav-toggle {
+    display: none; flex-direction: column;
+    gap: 5px; cursor: pointer;
+  }
+  .nav-toggle span {
+    width: 22px; height: 2px;
+    background: white; border-radius: 2px;
+    transition: 0.3s;
+  }
+ 
+  /* ══════════════════════════════════════
+     MOBILE MENU
+  ══════════════════════════════════════ */
+  .mobile-menu {
+    display: none; flex-direction: column;
+    position: fixed; top: 70px; left: 0; right: 0; bottom: 0;
+    background: var(--forest); z-index: 199;
+    padding: 32px 6vw;
+    overflow-y: auto;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    color: rgba(255,255,255,0.85); text-decoration: none;
+    font-size: 18px; font-family: 'Cormorant Garamond', serif;
+    font-weight: 300; padding: 16px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .mob-book {
+    background: var(--green); color: white !important;
+    text-align: center; border-radius: 2px;
+    padding: 15px !important; margin-top: 24px;
+    border: none !important; font-size: 16px;
+  }
+ 
+  /* ══════════════════════════════════════
+     PAGE CONTENT AREA (demo only)
+  ══════════════════════════════════════ */
+  .page-content {
+    min-height: 60vh;
+    display: flex; align-items: left; justify-content: left;
+    flex-direction: column; gap: 20px;
+    padding: 80px 5vw;
+    text-align: left;
+  }
+  .page-content h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 300; color: var(--text-dark); line-height: 1.2;
+  }
+  .page-content h2 em { font-style: italic; color: var(--green); }
+  .page-content p {
+    font-size: 16px; color: var(--text-mid);
+    line-height: 1.8; max-width: 560px;
+  }
+  .page-content code {
+    display: inline-block;
+    background: rgba(13,33,24,0.06);
+    border: 1px solid rgba(30,138,74,0.2);
+    color: var(--green);
+    font-size: 13px; padding: 4px 10px; border-radius: 2px;
+    font-family: monospace; margin-top: 4px;
+  }
+ 
+  /* ══════════════════════════════════════
+     FOOTER
+  ══════════════════════════════════════ */
+  footer {
+    background: var(--forest);
+    padding: 64px 5vw 28px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+  .footer-inner { max-width: 1200px; margin: 0 auto; }
+ 
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 48px;
+    padding-bottom: 48px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+ 
+  .footer-brand p {
+    color: rgba(255,255,255,0.36);
+    font-size: 13.5px; line-height: 1.8;
+    margin-top: 16px; max-width: 260px;
+  }
+ 
+  .footer-col h4 {
+    color: rgba(255,255,255,0.88);
+    font-size: 11px; letter-spacing: 2px;
+    text-transform: uppercase; font-weight: 600;
+    margin-bottom: 18px;
+  }
+  .footer-col a {
+    display: block; color: rgba(255,255,255,0.36);
+    font-size: 13.5px; text-decoration: none;
+    margin-bottom: 10px; transition: color 0.2s;
+  }
+  .footer-col a:hover { color: var(--green-light); }
+ 
+  .footer-bottom {
+    padding-top: 26px;
+    display: flex; justify-content: space-between;
+    align-items: center; flex-wrap: wrap; gap: 10px;
+    color: rgba(255,255,255,0.2); font-size: 12px;
+  }
+ 
+  /* ══════════════════════════════════════
+     RESPONSIVE
+  ══════════════════════════════════════ */
+  @media (max-width: 960px) {
+    .nav-links { display: none; }
+    .nav-toggle { display: flex; }
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
+  }
+  @media (max-width: 600px) {
+    .footer-top { grid-template-columns: 1fr; }
+    .page-content { padding: 60px 5vw; }
+  }
+}
+</style>
+</head>
+
+<aside class="donate-card">
+  <div class="donate-heart-wrap">
+    <div class="donate-pulse-ring"></div>
+    <div class="donate-pulse-ring-2"></div>
+    <div class="donate-heart-bg">
+      <svg class="donate-heart-svg" width="36" height="36" viewBox="0 0 24 24" fill="#1e8a4a" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+      </svg>
+    </div>
+  </div>
+  <div class="donate-text">
+    <div class="donate-eyebrow">Free for stroke patients &amp; families</div>
+    <h3>Help us keep this tool free.</h3>
+    <p>No paywalls, no subscriptions, no memberships. If this helped someone you love on their recovery journey, a small donation keeps it running for everyone who needs it.</p>
+  </div>
+  <div class="donate-actions">
+    <a class="donate-btn" href="https://ko-fi.com/joshdpt" target="_blank" rel="noopener">Support on Ko-fi</a>
+    <p class="donate-note">No account needed &middot; any amount welcome</p>
+  </div>
+</aside>
+  
+<body>
+</div>
+  
+ 
+<!-- ══════════════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════════════════ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+ 
+      <!-- Brand -->
+     <div class="footer-brand">
+  <a href="https://striveptlv.com" class="nav-logo">
+    <img src="https://striveptlv.com/logo.png" alt="STRIVE PT Logo" class="logo-img">
+    <div>
+      <div class="logo-text">STRIVE</div>
+      <div class="logo-sub">Physical Therapy · Las Vegas</div>
+    </div>
+  </a>
+  <p>Stroke &amp; balance physical therapy delivered 1-on-1 in your Las Vegas home. Servicing Las Vegas in May 2026.</p>
+</div>
+
+      <!-- Practice -->
+      <div class="footer-col">
+        <h4>Practice</h4>
+        <a href="https://striveptlv.com/#difference">Why 1-on-1 PT</a>
+        <a href="https://striveptlv.com/#providers">Our Team</a>
+        <a href="https://striveptlv.com/#pricing">Payment Options</a>
+        <a href="https://striveptlv.com/#faq">FAQ</a>
+        <a href="https://striveptlv.com/#contact">Medicare Waitlist</a>
+        <a href="https://striveptlv.com/moneymanagement/" target="_blank" rel="noopener">Patient Tools</a>
+      </div>
+ 
+      <!-- Las Vegas -->
+      <div class="footer-col">
+        <h4>Las Vegas</h4>
+        <a href="https://striveptlv.com/#booking">Book via JaneApp</a>
+        <a href="https://striveptlv.com/#contact">Contact Us</a>
+        <a href="https://striveptlv.com/#contact">Skye Canyon / Centennial Hills</a>
+        <a href="https://striveptlv.com/#contact">Summerlin</a>
+        <a href="https://striveptlv.com/#contact">Spring Valley</a>
+      </div>
+ 
+    </div>
+ 
+    <div class="footer-bottom">
+      <span>&copy; 2026 STRIVE Physical Therapy &middot; Las Vegas, NV &middot; All rights reserved.</span>
+      <span>Licensed Physical Therapists &middot; State of Nevada</span>
+    </div>
+  </div>
+</footer>
+ 
+ 
+<script>
+function toggleMenu() {
+  document.getElementById('mobileMenu').classList.toggle('open');
+}
+function togglePatientResource() {
+  document.getElementById('patientResourceItems').classList.toggle('open');
+  document.querySelector('.mob-arrow').classList.toggle('open');
+}
+
+  
+</script>
+</body>
+</html>
