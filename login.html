@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login – STRIVE Physical Therapy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  :root {
+    --forest:      #0d2118;
+    --green:       #1e8a4a;
+    --green-light: #2faa5e;
+    --green-pale:  #e8f5ee;
+    --gold:        #c9973a;
+    --cream:       #f2f7f4;
+    --warm-white:  #f6fbf7;
+    --text-dark:   #0d2118;
+    --text-mid:    #2e5040;
+    --text-light:  #5a7a68;
+    --line: rgba(30,138,74,0.18);
+    --shadow: 0 24px 48px rgba(13,33,24,0.14);
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #f6fbf7;
+    color: var(--text-dark);
+    overflow-x: hidden;
+    padding-top: 70px;
+    min-height: 100vh;
+    background:
+      radial-gradient(circle at top left, rgba(30,138,74,0.10), transparent 30%),
+      radial-gradient(circle at bottom right, rgba(201,151,58,0.09), transparent 28%),
+      linear-gradient(180deg, #f2f7f4 0%, #e8f5ee 60%, #ddf0e5 100%);
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+    background: rgba(13,33,24,0.97);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(30,138,74,0.25);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5vw; height: 70px;
+  }
+  .nav-logo { display: flex; align-items: center; gap: 11px; text-decoration: none; }
+  .logo-img { width: 50px; height: 50px; object-fit: contain; flex-shrink: 0; }
+  .logo-text { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600; color: white; line-height: 1.1; letter-spacing: 2px; }
+  .logo-sub { font-size: 9.5px; font-family: 'DM Sans', sans-serif; color: var(--green-light); font-weight: 300; letter-spacing: 2.5px; text-transform: uppercase; }
+  .nav-links { display: flex; align-items: center; gap: 26px; }
+  .nav-links a { color: rgba(255,255,255,0.72); text-decoration: none; font-size: 13.5px; letter-spacing: 0.3px; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--green-light); }
+  .nav-book { background: var(--green) !important; color: white !important; padding: 9px 22px; border-radius: 2px; font-weight: 500 !important; transition: background 0.2s !important; }
+  .nav-book:hover { background: var(--green-light) !important; }
+  .nav-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+  .nav-toggle span { width: 22px; height: 2px; background: white; border-radius: 2px; }
+
+  /* ── NAV DROPDOWN ── */
+  .nav-dropdown { position: relative; display: flex; align-items: center; }
+  .nav-dropdown > a { display: flex; align-items: center; gap: 5px; padding: 24px 0; }
+  .nav-dropdown > a::after { content: ''; display: inline-block; width: 0; height: 0; border-left: 4px solid transparent; border-right: 4px solid transparent; border-top: 5px solid rgba(255,255,255,0.55); transition: transform 0.2s; }
+  .nav-dropdown:hover > a { color: var(--green-light); }
+  .nav-dropdown:hover > a::after { transform: rotate(180deg); border-top-color: var(--green-light); }
+  .dropdown-menu { opacity: 0; pointer-events: none; position: absolute; top: 100%; right: 0; background: #133022; border: 1px solid rgba(30,138,74,0.25); border-radius: 4px; min-width: 190px; overflow: hidden; box-shadow: 0 8px 24px rgba(0,0,0,0.35); transition: opacity 0.15s; }
+  .nav-dropdown:hover .dropdown-menu { opacity: 1; pointer-events: auto; }
+  .dropdown-menu a { display: block; color: rgba(255,255,255,0.72); font-size: 13.5px; padding: 11px 18px; border-bottom: 1px solid rgba(255,255,255,0.05); transition: background 0.15s, color 0.15s; white-space: nowrap; }
+  .dropdown-menu a:last-child { border-bottom: none; }
+  .dropdown-menu a:hover { background: rgba(30,138,74,0.15); color: #2faa5e; }
+
+  /* ── MOBILE MENU ── */
+  .mobile-menu { display: none; flex-direction: column; position: fixed; top: 70px; left: 0; right: 0; bottom: 0; background: var(--forest); z-index: 199; padding: 32px 6vw; overflow-y: auto; }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a { color: rgba(255,255,255,0.85); text-decoration: none; font-size: 18px; font-family: 'Cormorant Garamond', serif; font-weight: 300; padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .mob-book { background: var(--green); color: white !important; text-align: center; border-radius: 2px; padding: 15px !important; margin-top: 24px; border: none !important; font-size: 16px; }
+  .mob-dropdown { border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .mob-dropdown-toggle { display: flex; justify-content: space-between; align-items: center; color: rgba(255,255,255,0.85); font-size: 18px; font-family: 'Cormorant Garamond', serif; font-weight: 300; padding: 16px 0; cursor: pointer; }
+  .mob-arrow { font-size: 22px; color: #2faa5e; display: inline-block; transition: transform 0.25s; }
+  .mob-arrow.open { transform: rotate(90deg); }
+  .mob-dropdown-items { display: none; flex-direction: column; padding-left: 16px; }
+  .mob-dropdown-items.open { display: flex; }
+  .mob-dropdown-items a { font-size: 15px !important; padding: 12px 0 !important; border-bottom: 1px solid rgba(255,255,255,0.04) !important; color: rgba(255,255,255,0.6) !important; }
+  .mob-dropdown-items a:last-child { border-bottom: none !important; }
+
+  /* ── LOGIN WRAPPER ── */
+  .login-page {
+    min-height: calc(100vh - 70px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px 80px;
+  }
+
+  .login-card {
+    background: rgba(255,255,255,0.92);
+    border: 1px solid rgba(30,138,74,0.18);
+    border-radius: 28px;
+    box-shadow: 0 24px 64px rgba(13,33,24,0.13);
+    backdrop-filter: blur(16px);
+    padding: 48px 44px 44px;
+    width: 100%;
+    max-width: 440px;
+    text-align: center;
+  }
+
+  .login-icon {
+    width: 68px;
+    height: 68px;
+    background: rgba(30,138,74,0.10);
+    border: 1px solid rgba(30,138,74,0.28);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 22px;
+  }
+
+  .login-icon svg { display: block; }
+
+  .login-eyebrow {
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--green);
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+
+  .login-card h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 400;
+    color: var(--forest);
+    margin-bottom: 6px;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+
+  .login-card .subtitle {
+    font-size: 13.5px;
+    color: var(--text-light);
+    line-height: 1.6;
+    margin-bottom: 32px;
+  }
+
+  .form-group {
+    text-align: left;
+    margin-bottom: 18px;
+  }
+
+  .form-group label {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    color: var(--text-mid);
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+
+  .form-group input {
+    width: 100%;
+    padding: 13px 16px;
+    border: 1px solid rgba(30,138,74,0.22);
+    border-radius: 10px;
+    font-size: 15px;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text-dark);
+    background: rgba(255,255,255,0.8);
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    letter-spacing: 0.5px;
+  }
+
+  .form-group input:focus {
+    border-color: var(--green);
+    box-shadow: 0 0 0 3px rgba(30,138,74,0.12);
+  }
+
+  .form-group input.error {
+    border-color: #c0392b;
+    box-shadow: 0 0 0 3px rgba(192,57,43,0.10);
+  }
+
+  .error-msg {
+    display: none;
+    margin-top: 16px;
+    padding: 12px 16px;
+    background: rgba(192,57,43,0.08);
+    border: 1px solid rgba(192,57,43,0.22);
+    border-radius: 10px;
+    font-size: 13.5px;
+    color: #8b1a0e;
+    line-height: 1.5;
+  }
+
+  .error-msg.visible { display: block; }
+
+  .login-btn {
+    width: 100%;
+    margin-top: 8px;
+    padding: 14px 24px;
+    background: var(--green);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 500;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    letter-spacing: 0.4px;
+    transition: background 0.2s, transform 0.15s;
+  }
+
+  .login-btn:hover { background: var(--green-light); }
+  .login-btn:active { transform: scale(0.98); }
+
+  .login-note {
+    margin-top: 20px;
+    font-size: 12px;
+    color: var(--text-light);
+    line-height: 1.6;
+  }
+
+  .login-divider {
+    width: 48px;
+    height: 1px;
+    background: rgba(30,138,74,0.2);
+    margin: 28px auto;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--forest);
+    padding: 64px 5vw 28px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+  .footer-inner { max-width: 1200px; margin: 0 auto; }
+  .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; padding-bottom: 48px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .footer-brand p { color: rgba(255,255,255,0.36); font-size: 13.5px; line-height: 1.8; margin-top: 16px; max-width: 260px; }
+  .footer-col h4 { color: rgba(255,255,255,0.88); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; margin-bottom: 18px; }
+  .footer-col a { display: block; color: rgba(255,255,255,0.36); font-size: 13.5px; text-decoration: none; margin-bottom: 10px; transition: color 0.2s; }
+  .footer-col a:hover { color: var(--green-light); }
+  .footer-bottom { padding-top: 26px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; color: rgba(255,255,255,0.2); font-size: 12px; }
+
+  @media (max-width: 960px) {
+    .nav-links { display: none; }
+    .nav-toggle { display: flex; }
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
+  }
+  @media (max-width: 600px) {
+    .footer-top { grid-template-columns: 1fr; }
+    .login-card { padding: 36px 24px 32px; }
+  }
+</style>
+</head>
+
+<!-- ── NAV ── -->
+<nav>
+  <a href="https://striveptlv.com" class="nav-logo">
+    <img src="https://striveptlv.com/logo.png" alt="STRIVE PT Logo" class="logo-img">
+    <div>
+      <div class="logo-text">STRIVE</div>
+      <div class="logo-sub">Physical Therapy · Las Vegas</div>
+    </div>
+  </a>
+
+  <div class="nav-links">
+    <a href="https://striveptlv.com/">Home</a>
+    <a href="https://striveptlv.com/#services">Services</a>
+    <a href="https://striveptlv.com/#difference">Why 1-on-1</a>
+    <a href="https://striveptlv.com/#providers">Our Team</a>
+    <a href="https://striveptlv.com/#faq">FAQ</a>
+    <a href="https://striveptlv.com/#contact">Contact</a>
+    <div class="nav-dropdown">
+      <a href="#">Patient Resource</a>
+      <div class="dropdown-menu">
+        <a href="https://striveptlv.com/moneymanagement/">Online Bank Simulator</a>
+        <a href="http://www.striveptlv.com/toolsneuropt/">Vestibular Tools</a>
+        <a href="https://striveptlv.com/patient-resource/">Home Modifications</a>
+      </div>
+    </div>
+    <a href="https://striveptlv.com/" class="nav-book">Book Now</a>
+  </div>
+
+  <div class="nav-toggle" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- ── MOBILE MENU ── -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="https://striveptlv.com" onclick="toggleMenu()">Home</a>
+  <a href="https://striveptlv.com/#services" onclick="toggleMenu()">Services</a>
+  <a href="https://striveptlv.com/#difference" onclick="toggleMenu()">Why 1-on-1</a>
+  <a href="https://striveptlv.com/#providers" onclick="toggleMenu()">Our Team</a>
+  <a href="https://striveptlv.com/#faq" onclick="toggleMenu()">FAQ</a>
+  <a href="https://striveptlv.com/#contact" onclick="toggleMenu()">Contact</a>
+  <div class="mob-dropdown">
+    <div class="mob-dropdown-toggle" onclick="togglePatientResource()">
+      Patient Resource <span class="mob-arrow">›</span>
+    </div>
+    <div class="mob-dropdown-items" id="patientResourceItems">
+      <a href="https://striveptlv.com/moneymanagement/" onclick="toggleMenu()">Money Management</a>
+      <a href="http://www.striveptlv.com/toolsneuropt/">Vestibular Tools</a>
+      <a href="https://striveptlv.com/patient-resource/" onclick="toggleMenu()">Home Modifications</a>
+    </div>
+  </div>
+  <a href="https://striveptlv.com/#booking" class="mob-book" onclick="toggleMenu()">Book an Appointment</a>
+</div>
+
+<!-- ── LOGIN CONTENT ── -->
+<div class="login-page">
+  <div class="login-card">
+
+    <div class="login-icon">
+      <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2C9.24 2 7 4.24 7 7s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0 8c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm0 2c-3.33 0-10 1.67-10 5v2h20v-2c0-3.33-6.67-5-10-5zm8 5H4v-.99C4.2 15.29 8.3 14 12 14s7.8 1.29 8 3.01V17z" fill="#1e8a4a"/>
+      </svg>
+    </div>
+
+    <p class="login-eyebrow">STRIVE Physical Therapy</p>
+    <h1>Clinician Access</h1>
+    <p class="subtitle">This tool is for STRIVE PT staff and patients.<br>Please enter your credentials to continue.</p>
+
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input type="text" id="username" placeholder="Enter username" autocomplete="username" autocorrect="off" autocapitalize="characters" spellcheck="false">
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" placeholder="Enter password" autocomplete="current-password">
+    </div>
+
+    <div class="error-msg" id="errorMsg">
+      Incorrect username or password. Please try again or contact STRIVE PT for access.
+    </div>
+
+    <button class="login-btn" onclick="attemptLogin()">Sign In</button>
+
+    <p class="login-note">Need access? Contact <a href="https://striveptlv.com/#contact" style="color: var(--green); text-decoration: none;">STRIVE Physical Therapy</a>.</p>
+
+    <div class="login-divider"></div>
+    <p class="login-note" style="font-size: 11px;">This is a temporary access gate while the tool is in development.<br>© 2026 STRIVE Physical Therapy · Las Vegas, NV</p>
+
+  </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="https://striveptlv.com" class="nav-logo">
+          <img src="https://striveptlv.com/logo.png" alt="STRIVE PT Logo" class="logo-img">
+          <div>
+            <div class="logo-text">STRIVE</div>
+            <div class="logo-sub">Physical Therapy · Las Vegas</div>
+          </div>
+        </a>
+        <p>Stroke &amp; balance physical therapy delivered 1-on-1 in your Las Vegas home. Servicing Las Vegas in May 2026.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Practice</h4>
+        <a href="https://striveptlv.com/#difference">Why 1-on-1 PT</a>
+        <a href="https://striveptlv.com/#providers">Our Team</a>
+        <a href="https://striveptlv.com/#pricing">Payment Options</a>
+        <a href="https://striveptlv.com/#faq">FAQ</a>
+        <a href="https://striveptlv.com/#contact">Medicare Waitlist</a>
+        <a href="https://striveptlv.com/moneymanagement/" target="_blank" rel="noopener">Patient Tools</a>
+      </div>
+      <div class="footer-col">
+        <h4>Las Vegas</h4>
+        <a href="https://striveptlv.com/#booking">Book via JaneApp</a>
+        <a href="https://striveptlv.com/#contact">Contact Us</a>
+        <a href="https://striveptlv.com/#contact">Skye Canyon / Centennial Hills</a>
+        <a href="https://striveptlv.com/#contact">Summerlin</a>
+        <a href="https://striveptlv.com/#contact">Spring Valley</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 STRIVE Physical Therapy &middot; Las Vegas, NV &middot; All rights reserved.</span>
+      <span>Licensed Physical Therapists &middot; State of Nevada</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const VALID_USERNAME = 'STRIVE';
+  const VALID_PASSWORDS = ['JOSH', 'NCEP', 'GELA', 'STRIVEPTLV', 'CHARLIE'];
+  const REDIRECT_URL = './index.html'; // Change this to the page you want to unlock
+
+  function attemptLogin() {
+    const username = document.getElementById('username').value.trim().toUpperCase();
+    const password = document.getElementById('password').value.trim().toUpperCase();
+    const errorMsg = document.getElementById('errorMsg');
+    const usernameInput = document.getElementById('username');
+    const passwordInput = document.getElementById('password');
+
+    const isValid = username === VALID_USERNAME && VALID_PASSWORDS.includes(password);
+
+    if (isValid) {
+      sessionStorage.setItem('strive_auth', 'true');
+      window.location.href = REDIRECT_URL;
+    } else {
+      errorMsg.classList.add('visible');
+      usernameInput.classList.add('error');
+      passwordInput.classList.add('error');
+      passwordInput.value = '';
+      passwordInput.focus();
+    }
+  }
+
+  // Allow Enter key to submit
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') attemptLogin();
+  });
+
+  // Clear error state on input
+  ['username', 'password'].forEach(id => {
+    document.getElementById(id).addEventListener('input', function() {
+      document.getElementById('errorMsg').classList.remove('visible');
+      this.classList.remove('error');
+    });
+  });
+
+  function toggleMenu() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  }
+  function togglePatientResource() {
+    document.getElementById('patientResourceItems').classList.toggle('open');
+    document.querySelector('.mob-arrow').classList.toggle('open');
+  }
+</script>
+
+</html>
