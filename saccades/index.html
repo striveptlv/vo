@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Saccades Exercise</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app-shell">
+    <header id="hero-banner" class="hero">
+      <div class="hero-topbar">
+        <div class="brand-block">
+          <a class="brand-mark" href="../index.html" aria-label="Back to vestibular home">
+            <img src="https://striveptlv.com/logo.png" alt="STRIVE Physical Therapy logo">
+          </a>
+          <div class="brand-copy">
+            <p class="eyebrow">STRIVE Physical Therapy Las Vegas</p>
+            <h1>Saccades</h1>
+          </div>
+        </div>
+        <div class="hero-actions">
+          <div class="theme-dock" aria-label="Theme">
+            <button type="button" class="theme-icon is-active" data-theme="device" aria-label="Follow device theme" title="Follow device">Auto</button>
+            <button type="button" class="theme-icon" data-theme="dark" aria-label="Dark theme" title="Dark theme">Dark</button>
+            <button type="button" class="theme-icon" data-theme="light" aria-label="Light theme" title="Light theme">Light</button>
+          </div>
+          <button id="back-to-top" class="hero-action secondary home-button" type="button" aria-label="Back to home">Home</button>
+          <a class="hero-action primary" href="https://calendly.com/dpt-striveptlv/30min" target="_blank" rel="noopener">Book Consultation</a>
+        </div>
+      </div>
+    </header>
+
+    <section id="setup-screen" class="screen active card">
+      <div class="section-heading">
+        <div>
+          <p class="step-label">Session Setup</p>
+          <h2>Configure the next saccade set</h2>
+        </div>
+      </div>
+
+      <div class="setup-grid">
+        <label class="field span-2">
+          <span>Timer</span>
+          <div class="range-card">
+            <input id="duration" type="range" min="15" max="120" step="5" value="30" list="duration-marks">
+            <datalist id="duration-marks">
+              <option value="30" label="30s"></option>
+              <option value="60" label="60s"></option>
+              <option value="120" label="120s"></option>
+            </datalist>
+            <div class="range-meta">
+              <strong id="duration-value">30 seconds</strong>
+              <span>Up to 2 minutes</span>
+            </div>
+          </div>
+        </label>
+
+        <label class="field span-2">
+          <span>Target Flash Speed</span>
+          <div class="range-card">
+            <input id="bpm" type="range" min="20" max="180" step="1" value="60">
+            <div class="range-meta">
+              <strong id="bpm-value">60 BPM</strong>
+              <span>Alternates left and right</span>
+            </div>
+          </div>
+        </label>
+
+        <label class="field">
+          <span>Level of Difficulty</span>
+          <select id="difficulty">
+            <option value="simple-round">Simple round target</option>
+            <option value="alphabetical-letters">Alphabetical letters</option>
+            <option value="randomized-letters">Randomized letters</option>
+            <option value="random-color">Random color</option>
+            <option value="randomized-words">Randomized words</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span>Shifting Background</span>
+          <select id="background-mode">
+            <option value="none">None</option>
+            <option value="horizontal">Horizontal</option>
+            <option value="vertical">Vertical</option>
+            <option value="combination">Combination</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span>Position</span>
+          <select id="position">
+            <option value="Standing">Standing</option>
+            <option value="Sitting">Sitting</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span>Surface</span>
+          <select id="surface">
+            <option value="Firm">Firm</option>
+            <option value="Compliant">Compliant</option>
+            <option value="Moving">Moving</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span>Number of Sets</span>
+          <select id="sets">
+            <option value="1">1 set</option>
+            <option value="2">2 sets</option>
+            <option value="3" selected>3 sets</option>
+            <option value="4">4 sets</option>
+            <option value="5">5 sets</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span>Clinician Email</span>
+          <input id="clinician-email" type="email" placeholder="optional@example.com">
+        </label>
+
+        <label class="field">
+          <span>Theme</span>
+          <select id="theme">
+            <option value="device">Device</option>
+            <option value="dark">Dark</option>
+            <option value="light">Light</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="summary-panel">
+        <div>
+          <p class="step-label">Preview</p>
+          <p id="setup-preview" class="summary-copy"></p>
+        </div>
+        <div class="button-row setup-actions">
+          <button id="finish-early-button" class="secondary danger" type="button" disabled>Finish Early and Generate Note</button>
+          <button id="start-session" class="primary" type="button">Start Activity</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="countdown-screen" class="screen countdown-screen" aria-live="polite">
+      <div class="countdown-shell">
+        <p class="step-label">Prepare</p>
+        <div id="countdown-label" class="countdown-label">Lock eyes on the pulsing center target</div>
+        <div id="countdown-number" class="countdown-number">3</div>
+        <p id="countdown-summary" class="countdown-summary"></p>
+      </div>
+    </section>
+
+    <section id="exercise-screen" class="screen exercise-screen" aria-live="polite">
+      <div class="exercise-topbar">
+        <div class="metric">
+          <span>Set</span>
+          <strong id="live-set">1 / 3</strong>
+        </div>
+        <div class="metric">
+          <span>Time Left</span>
+          <strong id="time-left">00:30</strong>
+        </div>
+        <div class="metric">
+          <span>Tempo</span>
+          <strong id="live-bpm">60 BPM</strong>
+        </div>
+        <div class="exercise-actions">
+          <button id="fullscreen-button" class="secondary" type="button">Full Screen</button>
+          <button id="end-session" class="secondary danger" type="button">End Activity</button>
+        </div>
+      </div>
+
+      <div id="exercise-stage" class="exercise-stage">
+        <div class="background-overlay" aria-hidden="true"></div>
+
+        <div id="center-target" class="center-target" aria-hidden="true">
+          <div class="center-ring ring-outer"></div>
+          <div class="center-ring ring-middle"></div>
+          <div class="center-ring ring-pulse"></div>
+          <div class="center-core"></div>
+        </div>
+
+        <div id="side-target" class="side-target hidden" aria-live="polite">
+          <span id="side-target-content" class="side-target-content"></span>
+        </div>
+      </div>
+
+      <div class="exercise-footer">
+        <p id="instruction-line">Focus on the pulsing center target. Shift eyes quickly to each side target as it appears.</p>
+        <p id="meta-line">Standing on firm surface</p>
+      </div>
+    </section>
+
+    <section id="rating-screen" class="screen card post-card">
+      <div class="section-heading">
+        <div>
+          <p class="step-label">Post-Set Rating</p>
+          <h2>How dizzy is the patient right now?</h2>
+        </div>
+      </div>
+
+      <div class="rating-scale">
+        <p class="scale-label">Tap 1 to 10, with 10 being the worst dizziness.</p>
+        <div id="set-rating-grid" class="rating-grid" role="radiogroup" aria-label="Set dizziness rating"></div>
+      </div>
+
+      <div class="linear-scale" aria-hidden="true">
+        <span>1</span>
+        <div class="scale-bar"></div>
+        <span>10</span>
+      </div>
+
+      <div class="button-row">
+        <button id="finish-after-rating" class="secondary danger" type="button">Finish Early and Generate Note</button>
+        <button id="save-set-rating" class="primary" type="button" disabled>Save Rating and Continue</button>
+      </div>
+    </section>
+
+    <section id="clinician-screen" class="screen card post-card">
+      <div class="section-heading">
+        <div>
+          <p class="step-label">Clinician Review</p>
+          <h2>Final dizziness rating and documentation</h2>
+        </div>
+      </div>
+
+      <div class="rating-scale">
+        <p class="scale-label">Record the final rating with large, easy-to-read numbers.</p>
+        <div id="clinician-rating-grid" class="rating-grid" role="radiogroup" aria-label="Clinician final dizziness rating"></div>
+      </div>
+
+      <div class="linear-scale" aria-hidden="true">
+        <span>1</span>
+        <div class="scale-bar"></div>
+        <span>10</span>
+      </div>
+
+      <label class="field">
+        <span>Documentation Paragraph</span>
+        <textarea id="documentation-output" rows="8" readonly></textarea>
+      </label>
+
+      <div class="button-row">
+        <button id="copy-documentation" class="secondary" type="button">Copy Paragraph</button>
+        <button id="continue-to-patient" class="secondary" type="button">Patient Review</button>
+        <button id="restart-from-clinician" class="primary" type="button">Start New Session</button>
+      </div>
+    </section>
+
+    <section id="patient-screen" class="screen card post-card">
+      <div class="section-heading">
+        <div>
+          <p class="step-label">Patient Review</p>
+          <h2>Rate dizziness after the activity</h2>
+        </div>
+      </div>
+
+      <div class="rating-scale">
+        <p class="scale-label">Choose the number that best matches how dizzy you feel.</p>
+        <div id="patient-rating-grid" class="rating-grid" role="radiogroup" aria-label="Patient dizziness rating"></div>
+      </div>
+
+      <div class="linear-scale" aria-hidden="true">
+        <span>1</span>
+        <div class="scale-bar"></div>
+        <span>10</span>
+      </div>
+
+      <div class="button-row">
+        <button id="email-clinician" class="secondary" type="button">Send Email to Clinician</button>
+        <button id="skip-email" class="secondary" type="button">Skip Email</button>
+        <button id="restart-from-patient" class="primary" type="button">Start New Session</button>
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      Created Strive Physical Therapy - Las Vegas<br>© 2026 STRIVE Physical Therapy · Las Vegas, NV · All rights reserved.
+    </footer>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
