@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visual Tracking Challenge</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app-shell">
+    <section id="setup-screen" class="screen active">
+      <header class="hero">
+        <div class="hero-topbar">
+          <div class="brand-block">
+            <a class="brand-mark" href="../index.html" aria-label="Back to vestibular home">
+              <img src="https://striveptlv.com/logo.png" alt="STRIVE Physical Therapy logo">
+            </a>
+            <div class="brand-copy">
+              <p class="eyebrow">STRIVE Physical Therapy Las Vegas</p>
+              <h1>Visual Tracking</h1>
+            </div>
+          </div>
+          <div class="hero-actions">
+            <div class="theme-dock" aria-label="Theme">
+              <button type="button" class="theme-icon is-active" data-theme="device" aria-label="Follow device theme" title="Follow device">Auto</button>
+              <button type="button" class="theme-icon" data-theme="dark" aria-label="Dark theme" title="Dark theme">Dark</button>
+              <button type="button" class="theme-icon" data-theme="light" aria-label="Light theme" title="Light theme">Light</button>
+            </div>
+            <button id="back-to-top" class="hero-action secondary home-button" type="button" aria-label="Back to home">Home</button>
+            <a class="hero-action primary" href="https://calendly.com/dpt-striveptlv/30min" target="_blank" rel="noopener">Book Consultation</a>
+          </div>
+        </div>
+      </header>
+
+      <section class="card">
+        <div class="section-heading">
+          <div>
+            <p class="step-label">Session Setup</p>
+            <h2>Configure the activity</h2>
+          </div>
+          <div class="set-chip">Set <span id="set-number">1</span> of <span id="set-total">3</span></div>
+        </div>
+
+        <div class="setup-grid">
+          <label class="field span-2">
+            <span>Number of Balls</span>
+            <div class="range-card">
+              <input id="ball-count" type="range" min="3" max="18" step="1" value="8">
+              <div class="range-meta">
+                <strong id="ball-count-value">8 balls</strong>
+                <span>More movers increase tracking demand</span>
+              </div>
+            </div>
+          </label>
+
+          <label class="field span-2">
+            <span>Speed of Movement</span>
+            <div class="range-card">
+              <input id="speed" type="range" min="2" max="24" step="1" value="10">
+              <div class="range-meta">
+                <strong id="speed-value">10 / 24</strong>
+                <span>Higher values move and bounce faster</span>
+              </div>
+            </div>
+          </label>
+
+          <label class="field span-2">
+            <span>Time Completing Task</span>
+            <div class="range-card">
+              <input id="duration" type="range" min="10" max="90" step="5" value="30">
+              <div class="range-meta">
+                <strong id="duration-value">30 seconds</strong>
+                <span>After a 5 second memorize phase</span>
+              </div>
+            </div>
+          </label>
+
+          <label class="field">
+            <span>Distracting Background</span>
+            <select id="background-mode">
+              <option value="none">Minimal</option>
+              <option value="pulse">Low</option>
+              <option value="grid">Medium</option>
+              <option value="storm">High</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>Background Color</span>
+            <select id="stage-background">
+              <option value="black">Black</option>
+              <option value="white">White</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>Colors</span>
+            <select id="color-mode">
+              <option value="same">Same Color</option>
+              <option value="dual">2 Colors</option>
+              <option value="mixed">Different Colors</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>Target Type</span>
+            <select id="target-type">
+              <option value="ball">Ball</option>
+              <option value="bird">Birds Flapping</option>
+              <option value="leaf">Leaves</option>
+              <option value="puck">Hockey Puck</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>Target Highlight</span>
+            <select id="highlight-mode">
+              <option value="on">Halo + Label On</option>
+              <option value="off">No Halo / Label</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>Number of Sets</span>
+            <select id="sets">
+              <option value="1">1 set</option>
+              <option value="2">2 sets</option>
+              <option value="3" selected>3 sets</option>
+              <option value="4">4 sets</option>
+              <option value="5">5 sets</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>Clinician Email</span>
+            <input id="clinician-email" type="email" placeholder="optional@example.com">
+          </label>
+
+          <label class="field">
+            <span>Theme</span>
+            <select id="theme">
+              <option value="device">Device</option>
+              <option value="dark">Dark</option>
+              <option value="light">Light</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="summary-panel">
+          <div>
+            <p class="step-label">Preview</p>
+            <p id="setup-preview" class="summary-copy"></p>
+          </div>
+          <div class="button-row setup-actions">
+            <button id="finish-early-button" class="secondary" type="button" disabled>Finish Early and Generate Note</button>
+            <button id="start-session" class="primary" type="button">Start Activity</button>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <section id="countdown-screen" class="screen full-center" aria-live="polite">
+      <div class="countdown-shell">
+        <p class="step-label">Prepare</p>
+        <div id="countdown-label" class="countdown-label">Pick up the target with your eyes</div>
+        <div id="countdown-number" class="countdown-number">3</div>
+        <p id="countdown-summary" class="countdown-summary"></p>
+      </div>
+    </section>
+
+    <section id="exercise-screen" class="screen exercise-mode" aria-live="polite">
+      <div class="exercise-topbar">
+        <div class="metric">
+          <span>Set</span>
+          <strong id="live-set">1 / 3</strong>
+        </div>
+        <div class="metric">
+          <span>Time Left</span>
+          <strong id="time-left">00:30</strong>
+        </div>
+        <div class="metric">
+          <span>Phase</span>
+          <strong id="phase-label">Memorize</strong>
+        </div>
+        <div class="exercise-actions">
+          <button id="fullscreen-button" class="secondary" type="button">Full Screen</button>
+          <button id="end-session" class="secondary" type="button">End Activity</button>
+        </div>
+      </div>
+
+      <div id="exercise-stage" class="exercise-stage">
+        <div class="background-overlay" aria-hidden="true"></div>
+        <div id="stage-message" class="stage-message">Track the highlighted target</div>
+        <div id="mover-layer" class="mover-layer" aria-label="Visual tracking stage"></div>
+      </div>
+    </section>
+
+    <section id="selection-screen" class="screen">
+      <div class="selection-shell">
+        <div class="selection-topbar">
+          <div>
+            <p class="step-label">Tracking Result</p>
+            <h2>Tap the original target</h2>
+          </div>
+          <button id="confirm-selection" class="primary" type="button" disabled>Confirm Selection</button>
+        </div>
+
+        <div id="selection-stage" class="exercise-stage selection-stage">
+          <div class="background-overlay" aria-hidden="true"></div>
+          <div id="selection-message" class="stage-message">Choose the mover you tracked.</div>
+          <div id="selection-layer" class="mover-layer" aria-label="Frozen selection stage"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="rating-screen" class="screen">
+      <div class="card post-card">
+        <div class="section-heading">
+          <div>
+            <p class="step-label">Post-Set Rating</p>
+            <h2>How dizzy does the patient feel?</h2>
+          </div>
+        </div>
+
+        <div class="rating-scale">
+          <p class="scale-label">0 = no dizziness, 10 = worst dizziness</p>
+          <div class="big-linear-scale" aria-hidden="true">
+            <span>0</span>
+            <div class="scale-bar"></div>
+            <span>10</span>
+          </div>
+          <div id="set-rating-grid" class="rating-grid" role="radiogroup" aria-label="Set dizziness rating"></div>
+        </div>
+
+        <div class="button-row">
+          <button id="finish-after-rating" class="secondary" type="button">Finish Early and Generate Note</button>
+          <button id="save-set-rating" class="primary" type="button" disabled>Save Rating and Reconfigure</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="clinician-screen" class="screen">
+      <div class="card post-card">
+        <div class="section-heading">
+          <div>
+            <p class="step-label">Clinician Review</p>
+            <h2>Rate dizziness and create documentation</h2>
+          </div>
+        </div>
+
+        <div class="rating-scale">
+          <p class="scale-label">Tap the number that matches current dizziness.</p>
+          <div class="big-linear-scale" aria-hidden="true">
+            <span>0</span>
+            <div class="scale-bar"></div>
+            <span>10</span>
+          </div>
+          <div id="clinician-rating-grid" class="rating-grid" role="radiogroup" aria-label="Clinician dizziness rating"></div>
+        </div>
+
+        <label class="field">
+          <span>Documentation Paragraph</span>
+          <textarea id="documentation-output" rows="8" readonly></textarea>
+        </label>
+
+        <div class="button-row">
+          <button id="copy-documentation" class="secondary" type="button">Copy Paragraph</button>
+          <button id="continue-to-patient" class="secondary" type="button">Patient Review</button>
+          <button id="restart-from-clinician" class="primary" type="button">Start New Session</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="patient-screen" class="screen">
+      <div class="card post-card">
+        <div class="section-heading">
+          <div>
+            <p class="step-label">Patient Review</p>
+            <h2>Rate dizziness after the activity</h2>
+          </div>
+        </div>
+
+        <div class="rating-scale">
+          <p class="scale-label">Tap the number that best matches how dizzy you feel.</p>
+          <div class="big-linear-scale" aria-hidden="true">
+            <span>0</span>
+            <div class="scale-bar"></div>
+            <span>10</span>
+          </div>
+          <div id="patient-rating-grid" class="rating-grid" role="radiogroup" aria-label="Patient dizziness rating"></div>
+        </div>
+
+        <div class="button-row">
+          <button id="email-clinician" class="secondary" type="button">Send Email to Clinician</button>
+          <button id="skip-email" class="secondary" type="button">Skip Email</button>
+          <button id="restart-from-patient" class="primary" type="button">Start New Session</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
