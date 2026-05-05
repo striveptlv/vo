@@ -19,6 +19,7 @@
       --blue: #39b8ff;
       --mint: #5cff95;
       --yellow: #ffe44d;
+      --coral: #ff8a5b;
       --card-ink: #071014;
     }
 
@@ -52,10 +53,10 @@
     }
 
     .app-shell {
-      width: min(1100px, 100%);
+      width: min(1320px, 100%);
       margin: 0 auto;
       display: grid;
-      gap: 18px;
+      gap: 16px;
     }
 
     .section-card,
@@ -208,7 +209,7 @@
     }
 
     .section-card {
-      padding: 22px;
+      padding: 20px;
     }
 
     .intro-card {
@@ -240,13 +241,13 @@
 
     .tool-grid {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 18px;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
     }
 
     .tool-tile {
-      min-height: 270px;
-      padding: 24px;
+      min-height: 260px;
+      padding: 22px;
       border-radius: 26px;
       text-decoration: none;
       color: inherit;
@@ -283,6 +284,11 @@
       border-color: transparent;
     }
 
+    .tool-tile.quaternary {
+      background: var(--coral);
+      border-color: transparent;
+    }
+
     .tile-top {
       display: grid;
       gap: 12px;
@@ -307,7 +313,7 @@
       font-size: 0.98rem;
       line-height: 1.45;
       color: rgba(7, 16, 20, 0.84);
-      max-width: 28ch;
+      max-width: none;
     }
 
     .tile-action {
@@ -383,7 +389,10 @@
         flex: 1 1 220px;
       }
 
-      .tool-grid,
+      .tool-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
       .quick-grid {
         grid-template-columns: 1fr;
       }
@@ -489,6 +498,15 @@
             <h3>Saccades</h3>
             <div class="tile-meta">Eye-shift exercise</div>
             <div class="tile-desc">Train rapid center-to-side gaze shifts with graded targets, tempo changes, and post-task symptom tracking.</div>
+          </div>
+          <div class="tile-action">Open</div>
+        </a>
+
+        <a class="tool-tile quaternary" href="./visual%20tracking/index.html">
+          <div class="tile-top">
+            <h3>Visual Tracking</h3>
+            <div class="tile-meta">Multi-object tracking</div>
+            <div class="tile-desc">Track one moving target among multiple bouncing distractors with graded speed, color, background, and post-task symptom review.</div>
           </div>
           <div class="tile-action">Open</div>
         </a>
