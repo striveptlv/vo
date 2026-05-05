@@ -383,6 +383,14 @@ textarea {
   min-width: 180px;
 }
 
+#start-session {
+  min-width: 240px;
+  padding-inline: 1.8rem;
+  font-size: 1.08rem;
+  box-shadow: 0 18px 34px rgba(25, 196, 74, 0.22);
+  order: -1;
+}
+
 .home-button {
   min-width: 110px;
   padding-inline: 1.2rem;
@@ -573,6 +581,9 @@ body.session-mode .app-shell {
   min-height: 94px;
   padding: 0;
   border-radius: 999px;
+  box-shadow:
+    0 0 0 6px rgba(255, 255, 255, 0.18),
+    0 18px 42px rgba(0, 0, 0, 0.4);
 }
 
 .side-target.alphabetical-letters,
@@ -631,6 +642,11 @@ body[data-theme="light"] .exercise-footer p:last-child {
   margin-top: 0;
 }
 
+.post-card .button-row {
+  margin-top: 1.5rem;
+  padding-top: 0.35rem;
+}
+
 .rating-scale {
   margin-top: 1rem;
   display: grid;
@@ -639,14 +655,16 @@ body[data-theme="light"] .exercise-footer p:last-child {
 
 .rating-grid {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 0.85rem;
+  grid-template-columns: repeat(11, minmax(0, 1fr));
+  gap: 0.6rem;
 }
 
 .rating-grid button {
-  min-height: 88px;
-  border-radius: 24px;
-  font-size: 2rem;
+  min-height: 74px;
+  min-width: 0;
+  padding: 0.75rem 0.25rem;
+  border-radius: 22px;
+  font-size: 1.8rem;
   font-weight: 900;
   color: var(--ink);
 }
@@ -751,7 +769,7 @@ textarea {
   }
 
   .rating-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
   }
 
   .side-target.is-left {
@@ -819,5 +837,15 @@ textarea {
   .side-target.randomized-words {
     min-width: 132px;
     font-size: 1.2rem;
+  }
+
+  .rating-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.7rem;
+  }
+
+  .rating-grid button {
+    min-height: 68px;
+    font-size: 1.55rem;
   }
 }

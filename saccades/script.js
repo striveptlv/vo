@@ -8,8 +8,19 @@ const COLOR_BANK = [
   { name: "Purple", hex: "#8f6cff" },
 ];
 const WORD_BANK = [
-  "Focus", "Steady", "Center", "Bright", "Vision", "Target", "Calm", "Anchor",
-  "Quick", "Clear", "Shift", "Motion", "Follow", "Signal", "Balance", "Track",
+  "cat", "dog", "sun", "moon", "star", "tree", "fish", "bird",
+  "book", "ball", "milk", "sock", "hand", "foot", "nose", "ears",
+  "red", "blue", "green", "pink", "black", "white", "brown", "gray",
+  "run", "jump", "walk", "look", "find", "read", "play", "help",
+  "home", "school", "chair", "table", "apple", "grape", "peach", "pear",
+  "bread", "water", "juice", "snack", "plate", "spoon", "shirt", "shoes",
+  "happy", "sad", "fast", "slow", "big", "small", "hot", "cold",
+  "ship", "frog", "duck", "bug", "nest", "lake", "hill", "rock",
+  "rain", "wind", "cloud", "storm", "light", "plant", "grass", "seed",
+  "farm", "barn", "train", "truck", "road", "bridge", "door", "window",
+  "smile", "laugh", "wave", "clap", "drink", "sleep", "brush", "clean",
+  "pencil", "paper", "crayon", "paint", "game", "song", "dance", "story",
+  "rabbit", "turtle", "kitten", "puppy", "candle", "garden", "yellow", "purple",
 ];
 
 const screens = {
@@ -33,6 +44,7 @@ const controls = {
   sets: document.getElementById("sets"),
   clinicianEmail: document.getElementById("clinician-email"),
   theme: document.getElementById("theme"),
+  metronome: document.getElementById("metronome"),
 };
 
 const display = {
@@ -90,6 +102,7 @@ let currentSide = "right";
 let alphabeticalCursor = 0;
 let deviceThemeQuery = null;
 let currentThemeMode = "device";
+let audioContext = null;
 
 function initialize() {
   setupThemeListener();
@@ -117,7 +130,7 @@ function bindEvents() {
   controls.theme.addEventListener("change", () => applyTheme(controls.theme.value));
 
   buttons.backToTop.addEventListener("click", () => {
-    window.location.href = "../index.html";
+    window.location.href = "../launch.html";
   });
   buttons.finishEarly.addEventListener("click", finishSession);
   buttons.startSession.addEventListener("click", startSession);
@@ -166,7 +179,7 @@ function applyTheme(mode = controls.theme.value || currentThemeMode) {
 }
 
 function buildRatingGrid(container, mode) {
-  for (let value = 1; value <= 10; value += 1) {
+  for (let value = 0; value <= 10; value += 1) {
     const button = document.createElement("button");
     button.type = "button";
     button.textContent = String(value);
@@ -187,6 +200,7 @@ function getConfig() {
     surface: controls.surface.value,
     sets: Number(controls.sets.value),
     clinicianEmail: controls.clinicianEmail.value.trim(),
+    metronome: controls.metronome.value === "on",
   };
 }
 
@@ -197,7 +211,7 @@ function updatePreview() {
   display.bpmValue.textContent = `${config.bpm} BPM`;
   buttons.finishEarly.disabled = completedSets.length === 0;
   display.setupPreview.textContent =
-    `${formatDifficulty(config.difficulty)} at ${config.bpm} BPM for ${config.duration} seconds, ${config.sets} set${config.sets > 1 ? "s" : ""}, ${formatBackground(config.backgroundMode).toLowerCase()} background, ${config.position.toLowerCase()} on ${config.surface.toLowerCase()} surface.`;
+    `${formatDifficulty(config.difficulty)} at ${config.bpm} BPM for ${config.duration} seconds, ${config.sets} set${config.sets > 1 ? "s" : ""}, ${formatBackground(config.backgroundMode).toLowerCase()} background, ${config.position.toLowerCase()} on ${config.surface.toLowerCase()} surface, metronome ${config.metronome ? "on" : "off"}.`;
 }
 
 function startSession() {
@@ -232,6 +246,7 @@ function startCountdown() {
   display.countdownSummary.textContent =
     `Set ${currentSetIndex + 1} of ${config.sets}: ${formatDifficulty(config.difficulty)}, ${config.bpm} BPM, ${config.duration} seconds.`;
   display.countdownNumber.textContent = String(count);
+  playBeep(880, 0.08, config.metronome);
 
   document.body.classList.add("session-mode");
   showScreen("countdown");
@@ -241,10 +256,12 @@ function startCountdown() {
 
     if (count > 0) {
       display.countdownNumber.textContent = String(count);
+      playBeep(880, 0.08, config.metronome);
       return;
     }
 
     clearInterval(countdownInterval);
+    playBeep(920, 0.1, config.metronome);
     beginExercise();
   }, 1000);
 }
@@ -284,6 +301,7 @@ function triggerBeat() {
 
   const beatMs = Math.max(220, (60 / sessionConfig.bpm) * 1000);
   currentSide = currentSide === "left" ? "right" : "left";
+  playBeep(880, 0.06, sessionConfig.metronome);
 
   const content = getNextTargetPayload(sessionConfig.difficulty);
   renderSideTarget(content, currentSide, sessionConfig.difficulty);
@@ -296,7 +314,7 @@ function triggerBeat() {
 
 function getNextTargetPayload(difficulty) {
   if (difficulty === "simple-round") {
-    return { text: "", color: "#ffffff", label: "round target" };
+    return { text: "", color: "#d71920", label: "round target" };
   }
 
   if (difficulty === "alphabetical-letters") {
@@ -330,8 +348,8 @@ function renderSideTarget(payload, side, difficulty) {
     sideTarget.style.borderColor = payload.color;
     sideTargetContent.textContent = "";
   } else if (difficulty === "simple-round") {
-    sideTarget.style.background = "#ffffff";
-    sideTarget.style.borderColor = "#39b8ff";
+    sideTarget.style.background = payload.color;
+    sideTarget.style.borderColor = "#ffffff";
   } else {
     sideTarget.style.background = "#ffffff";
     sideTarget.style.borderColor = "#39b8ff";
@@ -352,6 +370,7 @@ function completeCurrentSet() {
     backgroundMode: sessionConfig.backgroundMode,
     position: sessionConfig.position,
     surface: sessionConfig.surface,
+    metronome: sessionConfig.metronome,
   };
 
   sideTarget.classList.add("hidden");
@@ -455,7 +474,7 @@ function buildDocumentationParagraph() {
 
   const setSummary = completedSets
     .map((set) =>
-      `Set ${set.setNumber}: ${set.duration}s at ${set.bpm} BPM using ${formatDifficulty(set.difficulty).toLowerCase()}, ${formatBackground(set.backgroundMode).toLowerCase()} background, ${set.position.toLowerCase()} on ${set.surface.toLowerCase()} surface, dizziness ${set.dizziness}/10`
+      `Set ${set.setNumber}: ${set.duration}s at ${set.bpm} BPM using ${formatDifficulty(set.difficulty).toLowerCase()}, ${formatBackground(set.backgroundMode).toLowerCase()} background, ${set.position.toLowerCase()} on ${set.surface.toLowerCase()} surface, metronome ${set.metronome ? "on" : "off"}, dizziness ${set.dizziness}/10`
     )
     .join("; ");
 
@@ -512,6 +531,39 @@ async function requestFullScreen() {
   if (document.exitFullscreen) {
     await document.exitFullscreen();
   }
+}
+
+function playBeep(frequency, duration, enabled) {
+  if (!enabled) {
+    return;
+  }
+
+  if (!audioContext) {
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContextClass) {
+      return;
+    }
+    audioContext = new AudioContextClass();
+  }
+
+  if (audioContext.state === "suspended") {
+    audioContext.resume();
+  }
+
+  const oscillator = audioContext.createOscillator();
+  const gainNode = audioContext.createGain();
+
+  oscillator.type = "sine";
+  oscillator.frequency.value = frequency;
+  gainNode.gain.setValueAtTime(0.0001, audioContext.currentTime);
+  gainNode.gain.exponentialRampToValueAtTime(0.18, audioContext.currentTime + 0.01);
+  gainNode.gain.exponentialRampToValueAtTime(0.0001, audioContext.currentTime + duration);
+
+  oscillator.connect(gainNode);
+  gainNode.connect(audioContext.destination);
+
+  oscillator.start();
+  oscillator.stop(audioContext.currentTime + duration);
 }
 
 function applyBackgroundMode(mode) {

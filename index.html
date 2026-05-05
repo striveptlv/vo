@@ -1,581 +1,924 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Vestibular Tools</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f6f5f1">
+  <title>VO Vestibular Tools | STRIVE Physical Therapy</title>
+  <meta name="description" content="Practice vestibular rehab exercises with VO by STRIVE Physical Therapy, including gaze stability, eye tracking, and saccades with an easy home-use launch experience.">
+  <link rel="canonical" href="https://striveptlv.com/vo">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+
   <style>
     :root {
-      --bg: #050505;
-      --panel: #111111;
-      --panel-strong: #1b1b1b;
-      --ink: #f4f4ef;
-      --muted: #afb3ad;
-      --line: #272727;
-      --shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
-      --blue: #39b8ff;
-      --mint: #5cff95;
-      --yellow: #ffe44d;
-      --card-ink: #071014;
+      --paper: #f6f5f1;
+      --paper-deep: #ece9df;
+      --panel: rgba(255, 255, 255, 0.84);
+      --panel-solid: #ffffff;
+      --line: rgba(18, 23, 21, 0.1);
+      --line-strong: rgba(18, 23, 21, 0.18);
+      --ink: #121715;
+      --text: #18211e;
+      --text-mid: #51615a;
+      --text-soft: #708078;
+      --accent: #b7d63b;
+      --accent-deep: #8ea91c;
+      --accent-pale: rgba(183, 214, 59, 0.12);
+      --navy: #214a7a;
+      --navy-deep: #163456;
+      --sage: #5d8b6f;
+      --sage-deep: #41614e;
+      --gold: #d2a54b;
+      --gold-deep: #9a7428;
+      --shadow: 0 24px 48px rgba(18, 23, 21, 0.1);
     }
 
-    body[data-theme="light"] {
-      --bg: #eef4f4;
-      --panel: #ffffff;
-      --panel-strong: #f4f7f7;
-      --ink: #0f2026;
-      --muted: #5f7076;
-      --line: #d9e1e3;
-      --shadow: 0 16px 34px rgba(15, 32, 38, 0.08);
-      --card-ink: #071014;
-    }
-
-    * { box-sizing: border-box; }
-
-    html, body {
-      margin: 0;
-      min-height: 100%;
-    }
-
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
     body {
-      font-family: "Atkinson Hyperlegible Next", "Avenir Next", "Segoe UI", sans-serif;
-      background: var(--bg);
+      font-family: 'Barlow', sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(33, 74, 122, 0.12), transparent 24%),
+        radial-gradient(circle at top right, rgba(210, 165, 75, 0.12), transparent 18%),
+        radial-gradient(circle at bottom left, rgba(93, 139, 111, 0.12), transparent 22%),
+        linear-gradient(180deg, #fbfcfe 0%, #f5f7f2 52%, #edf2ea 100%);
+      color: var(--text);
+      overflow-x: hidden;
+      padding-top: 70px;
+    }
+    body.menu-open { overflow: hidden; }
+    img { max-width: 100%; height: auto; }
+    a { color: inherit; }
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 200;
+      height: 70px;
+      background: rgba(246, 245, 241, 0.94);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 5vw;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 11px; text-decoration: none; }
+    .logo-img { width: 46px; height: 46px; object-fit: contain; flex-shrink: 0; }
+    .logo-text {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 27px;
+      font-weight: 700;
+      letter-spacing: 2px;
       color: var(--ink);
-      padding: max(18px, env(safe-area-inset-top)) max(18px, env(safe-area-inset-right)) max(18px, env(safe-area-inset-bottom)) max(18px, env(safe-area-inset-left));
+      line-height: 1;
+      text-transform: uppercase;
+    }
+    .logo-sub {
+      font-size: 9px;
+      color: var(--accent-deep);
+      font-weight: 700;
+      letter-spacing: 2.2px;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+    .nav-links { display: flex; align-items: center; gap: 22px; }
+    .nav-links a {
+      color: var(--text-mid);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--ink); }
+    .nav-book {
+      background: var(--ink) !important;
+      color: white !important;
+      padding: 10px 18px;
+      border-radius: 2px;
+    }
+    .nav-book:hover { background: var(--accent-deep) !important; }
+    .nav-dropdown { position: relative; display: flex; align-items: center; justify-content: center; }
+    .nav-dropdown > a { display: flex; align-items: center; gap: 5px; padding: 24px 0; }
+    .nav-dropdown > a::after {
+      content: '';
+      display: inline-block;
+      width: 0;
+      height: 0;
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 5px solid rgba(81, 97, 90, 0.7);
+      transition: transform 0.2s;
+    }
+    .nav-dropdown:hover > a::after { transform: rotate(180deg); border-top-color: var(--ink); }
+    .dropdown-menu {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      opacity: 0;
+      pointer-events: none;
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      min-width: 178px;
+      background: var(--panel-solid);
+      border: 1px solid var(--line);
+      box-shadow: 0 16px 30px rgba(18, 23, 21, 0.08);
+      text-align: center;
+      transition: opacity 0.15s;
+    }
+    .nav-dropdown:hover .dropdown-menu { opacity: 1; pointer-events: auto; }
+    .dropdown-menu a {
+      display: block;
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--line);
+      color: var(--text-mid);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.9px;
+      text-align: center;
+    }
+    .dropdown-menu a:last-child { border-bottom: none; }
+    .dropdown-menu a:hover { background: var(--accent-pale); color: var(--ink); }
+    .nav-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .nav-toggle span { width: 24px; height: 2px; background: var(--ink); }
+
+    .mobile-menu {
+      display: none;
+      flex-direction: column;
+      position: fixed;
+      top: 70px;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--paper);
+      z-index: 199;
+      padding: 28px 6vw;
+      overflow-y: auto;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      text-decoration: none;
+      color: var(--ink);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 21px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 15px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .mob-book {
+      background: var(--ink);
+      color: white !important;
+      text-align: center;
+      border-radius: 2px;
+      margin-top: 24px;
+      border: none !important;
+    }
+    .mob-dropdown { border-bottom: 1px solid var(--line); }
+    .mob-dropdown-toggle {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--ink);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 21px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 15px 0;
+      cursor: pointer;
+    }
+    .mob-arrow { font-size: 20px; color: var(--accent-deep); transition: transform 0.25s; }
+    .mob-arrow.open { transform: rotate(90deg); }
+    .mob-dropdown-items { display: none; flex-direction: column; padding-left: 14px; }
+    .mob-dropdown-items.open { display: flex; }
+    .mob-dropdown-items a {
+      font-family: 'Barlow', sans-serif;
+      font-size: 15px !important;
+      text-transform: none;
+      letter-spacing: 0;
+      color: var(--text-mid);
+      padding: 12px 0 !important;
     }
 
-    button, a {
-      -webkit-tap-highlight-color: transparent;
+    .schedule-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 240;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: rgba(8, 12, 14, 0.42);
+      backdrop-filter: blur(8px);
     }
-
-    .app-shell {
-      width: min(1100px, 100%);
-      margin: 0 auto;
+    .schedule-modal.open { display: flex; }
+    .schedule-dialog {
+      position: relative;
+      width: min(100%, 520px);
+      background: var(--panel-solid);
+      border: 1px solid var(--line);
+      box-shadow: 0 28px 64px rgba(18, 23, 21, 0.14);
+      padding: 30px 28px 26px;
+      border-radius: 28px;
+    }
+    .schedule-close {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--line);
+      background: transparent;
+      color: var(--ink);
+      font: inherit;
+      font-size: 24px;
+      line-height: 1;
+      cursor: pointer;
+      border-radius: 999px;
+    }
+    .schedule-close:hover { background: var(--accent-pale); }
+    .schedule-kicker {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent-deep);
+      margin-bottom: 12px;
+    }
+    .schedule-dialog h2 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(36px, 5vw, 44px);
+      line-height: 0.96;
+      color: var(--ink);
+      margin-bottom: 12px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .schedule-dialog p {
+      color: var(--text-mid);
+      font-size: 15px;
+      line-height: 1.75;
+      margin-bottom: 22px;
+    }
+    .schedule-contact {
+      display: inline-flex;
+      align-items: center;
+      margin-bottom: 20px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(18, 23, 21, 0.06);
+      color: var(--ink);
+      font-size: 0.92rem;
+      font-weight: 700;
+    }
+    .schedule-options {
       display: grid;
-      gap: 18px;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .schedule-option {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      text-align: center;
+      gap: 14px;
+      min-height: 190px;
+      padding: 22px 20px;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      text-decoration: none;
+      background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(236,233,223,0.72));
+      transition: border-color 0.2s, transform 0.15s, box-shadow 0.2s;
+    }
+    .schedule-option > div {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .schedule-option:hover {
+      border-color: var(--line-strong);
+      transform: translateY(-2px);
+      box-shadow: 0 16px 32px rgba(18, 23, 21, 0.08);
+    }
+    .schedule-option-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2.6px;
+      text-transform: uppercase;
+      color: var(--accent-deep);
+    }
+    .schedule-option h3 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 28px;
+      line-height: 0.98;
+      color: var(--ink);
+      margin: 10px 0 8px;
+      text-transform: uppercase;
+    }
+    .schedule-option strong {
+      font-size: 0.92rem;
+      font-weight: 800;
+      color: var(--ink);
     }
 
-    .section-card,
-    .footer-card {
+    .page {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 34px 0 42px;
+    }
+    .hero,
+    .card,
+    .content-footer {
       background: var(--panel);
       border: 1px solid var(--line);
-      border-radius: 28px;
+      border-radius: 30px;
       box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+    }
+    .hero { padding: 34px; }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 {
+      margin-bottom: 12px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(2.6rem, 5vw, 4.4rem);
+      line-height: 0.95;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: var(--ink);
+    }
+    .lead {
+      font-size: 1.08rem;
+      line-height: 1.7;
+      color: var(--text-mid);
+    }
+    .info-strip {
+      margin-top: 22px;
+      padding: 18px 20px;
+      border-radius: 22px;
+      background: linear-gradient(135deg, rgba(246, 245, 241, 0.95), rgba(255, 255, 255, 0.78));
+      border: 1px solid rgba(18, 23, 21, 0.08);
+    }
+    .info-strip p { margin: 0; line-height: 1.7; }
+    .launch-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      margin-top: 24px;
+    }
+    .card {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+    }
+    .label {
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #fff;
+    }
+    .label.utility { background: linear-gradient(135deg, var(--gold), var(--gold-deep)); }
+    .label.credit { background: linear-gradient(135deg, var(--navy), var(--navy-deep)); }
+    .label.bank { background: linear-gradient(135deg, var(--sage), var(--sage-deep)); }
+    .card h2 {
+      margin: 16px 0 10px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.8rem;
+      line-height: 1;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: var(--ink);
+    }
+    .card p {
+      margin-bottom: 22px;
+      line-height: 1.65;
+      color: var(--text-mid);
+      flex: 1;
+    }
+    .launch-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      padding: 14px 18px;
+      border-radius: 16px;
+      text-decoration: none;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: #fff;
+      transition: transform 160ms ease, box-shadow 160ms ease;
+    }
+    .launch-link:hover { transform: translateY(-1px); }
+    .launch-link.utility {
+      background: linear-gradient(135deg, var(--gold), var(--gold-deep));
+      box-shadow: 0 14px 28px rgba(154, 116, 40, 0.22);
+    }
+    .launch-link.credit {
+      background: linear-gradient(135deg, var(--navy), var(--navy-deep));
+      box-shadow: 0 14px 28px rgba(22, 52, 86, 0.24);
+    }
+    .launch-link.bank {
+      background: linear-gradient(135deg, var(--sage), var(--sage-deep));
+      box-shadow: 0 14px 28px rgba(65, 97, 78, 0.24);
     }
 
-    .topbar {
-      padding: 22px 24px;
-      display: flex;
+    .launch-card {
       align-items: center;
-      justify-content: space-between;
-      gap: 18px;
+      text-align: center;
+      padding: 0;
       background: transparent;
       border: none;
-      border-radius: 0;
       box-shadow: none;
+      backdrop-filter: none;
     }
 
-    .brand-block {
-      display: flex;
-      align-items: center;
-      gap: 18px;
+    .launch-card h2 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      margin-bottom: 14px;
     }
 
-    .brand-mark {
-      width: 86px;
-      height: 86px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      overflow: hidden;
-      text-decoration: none;
+    .launch-card p {
+      max-width: 700px;
+      margin-bottom: 28px;
     }
 
-    .brand-mark img {
-      width: 72%;
-      height: 72%;
-      object-fit: contain;
-      display: block;
+    .launch-link.primary-start {
+      width: min(100%, 520px);
+      min-height: 84px;
+      padding: 20px 28px;
+      font-size: clamp(1.2rem, 2vw, 1.45rem);
+      line-height: 1.15;
+      letter-spacing: 0.03em;
+      background: #121715;
+      box-shadow: 0 20px 36px rgba(18, 23, 21, 0.26);
+      border: 1px solid #121715;
+      color: #ffffff;
+      text-wrap: balance;
     }
 
-    .brand-copy {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
-    .eyebrow {
-      font-size: 0.9rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: #8f948c;
-    }
-
-    h1, h2, p {
-      margin: 0;
-    }
-
-    h1 {
-      font-size: clamp(2rem, 5vw, 3.25rem);
-      line-height: 0.95;
-      letter-spacing: -0.04em;
-    }
-
-    .topbar-actions {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-    }
-
-    .theme-dock {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 6px;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      background: var(--panel-strong);
-    }
-
-    .theme-icon {
-      width: 42px;
-      height: 42px;
-      min-width: 42px;
-      flex: 0 0 42px;
-      border: 1px solid transparent;
-      border-radius: 999px;
-      background: transparent;
-      color: var(--muted);
-      font-size: 0.76rem;
-      font-weight: 800;
-      letter-spacing: 0.04em;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      transition: background-color 140ms ease, color 140ms ease, transform 140ms ease;
-    }
-
-    .theme-icon:hover {
-      transform: translateY(-1px);
-    }
-
-    .theme-icon.is-active {
-      background: var(--blue);
-      color: var(--card-ink);
-    }
-
-    .top-action {
-      min-height: 64px;
-      min-width: 176px;
-      padding: 16px 22px;
-      border-radius: 20px;
-      border: 1px solid var(--line);
-      background: var(--panel-strong);
-      color: var(--ink);
-      text-decoration: none;
-      font-size: 1rem;
-      font-weight: 700;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      transition: transform 140ms ease, box-shadow 140ms ease, border-color 140ms ease;
-    }
-
-    .top-action:hover,
-    .tool-tile:hover,
-    .quick-link:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.32);
-    }
-
-    .top-action.primary {
-      background: var(--blue);
-      color: #031018;
-      border-color: transparent;
-    }
-
-    .top-action.secondary {
-      background: var(--panel-strong);
-    }
-
-    .section-card {
-      padding: 22px;
-    }
-
-    .section-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 18px;
-    }
-
-    .section-header h2 {
-      font-size: clamp(1.3rem, 3vw, 1.85rem);
-      letter-spacing: -0.03em;
-    }
-
-    .section-tag {
-      padding: 10px 14px;
-      border-radius: 999px;
-      background: #1b1b1b;
-      color: #d9ddd5;
-      font-size: 0.84rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      white-space: nowrap;
-    }
-
-    .tool-grid {
+    .steps-grid {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 18px;
+      margin-top: 24px;
     }
 
-    .tool-tile {
-      min-height: 270px;
-      padding: 24px;
-      border-radius: 26px;
-      text-decoration: none;
-      color: inherit;
+    .step-card {
+      padding: 22px 18px;
+      text-align: center;
+      align-items: center;
+    }
+
+    .step-number {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 14px;
+      background: var(--accent-pale);
+      color: var(--accent-deep);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+
+    .step-card h3 {
+      margin-bottom: 10px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.35rem;
+      line-height: 1;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: var(--ink);
+    }
+
+    .step-card p {
+      margin-bottom: 0;
+      font-size: 0.95rem;
+    }
+
+
+    .donate-card {
+      margin-top: 24px;
+      background: #121715;
+      border: 1px solid rgba(183, 214, 59, 0.18);
+      border-radius: 30px;
+      box-shadow: var(--shadow);
+      padding: 36px 40px;
       display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 18px;
-      border: 1px solid rgba(255, 255, 255, 0.4);
+      align-items: center;
+      gap: 36px;
       position: relative;
       overflow: hidden;
-      transition: transform 140ms ease, box-shadow 140ms ease;
     }
-
-    .tool-tile::before {
-      content: "";
+    .donate-card::before {
+      content: '';
       position: absolute;
-      inset: 0;
-      background: none;
+      top: -60px;
+      right: -60px;
+      width: 240px;
+      height: 240px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(183, 214, 59, 0.18) 0%, transparent 70%);
       pointer-events: none;
     }
-
-    .tool-tile.primary {
-      background: var(--blue);
-      border-color: transparent;
-    }
-
-    .tool-tile.secondary {
-      background: var(--mint);
-      border-color: transparent;
-    }
-
-    .tool-tile.tertiary {
-      background: var(--yellow);
-      border-color: transparent;
-    }
-
-    .tile-top {
-      display: grid;
-      gap: 12px;
+    .donate-heart-wrap {
       position: relative;
-      z-index: 1;
-    }
-
-    .tool-tile h3 {
-      font-size: clamp(1.6rem, 3vw, 2.2rem);
-      line-height: 1;
-      letter-spacing: -0.04em;
-      color: var(--card-ink);
-    }
-
-    .tile-meta {
-      font-size: 1rem;
-      font-weight: 600;
-      color: rgba(7, 16, 20, 0.72);
-    }
-
-    .tile-desc {
-      font-size: 0.98rem;
-      line-height: 1.45;
-      color: rgba(7, 16, 20, 0.84);
-      max-width: 28ch;
-    }
-
-    .tile-action {
-      min-height: 66px;
-      padding: 16px 18px;
-      border-radius: 20px;
+      flex-shrink: 0;
+      width: 80px;
+      height: 80px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.05rem;
-      font-weight: 800;
-      letter-spacing: 0.03em;
+    }
+    .donate-pulse-ring,
+    .donate-pulse-ring-2 {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 2px solid rgba(183, 214, 59, 0.45);
+      animation: donate-pulse 2s ease-out infinite;
+    }
+    .donate-pulse-ring-2 {
+      border-color: rgba(183, 214, 59, 0.22);
+      animation-delay: 0.7s;
+    }
+    .donate-heart-bg {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: rgba(183, 214, 59, 0.12);
+      border: 1px solid rgba(183, 214, 59, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .donate-heart-svg { animation: donate-hb 1.6s ease-in-out infinite; }
+    .donate-eyebrow {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px;
+      letter-spacing: 2.5px;
       text-transform: uppercase;
-      position: relative;
-      z-index: 1;
+      color: var(--accent);
+      font-weight: 700;
+      margin-bottom: 6px;
     }
-
-    .tool-tile.primary .tile-action {
-      background: rgba(255, 255, 255, 0.3);
-      color: var(--card-ink);
+    .donate-card h3 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 2rem;
+      line-height: 0.98;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: white;
+      margin: 0 0 8px;
     }
-
-    .tool-tile.secondary .tile-action {
-      background: rgba(255, 255, 255, 0.3);
-      color: var(--card-ink);
+    .donate-card p {
+      font-size: 13.5px;
+      color: rgba(255, 255, 255, 0.68);
+      line-height: 1.75;
+      margin: 0;
+      max-width: 420px;
     }
-
-    .tool-tile.tertiary .tile-action {
-      background: rgba(255, 255, 255, 0.3);
-      color: var(--card-ink);
+    .donate-text { flex: 1; }
+    .donate-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      min-width: 190px;
+      flex-shrink: 0;
     }
-
-    .tool-tile.disabled {
-      cursor: default;
-    }
-
-    .tool-tile.disabled .tile-action {
-      background: rgba(0, 0, 0, 0.12);
-      color: rgba(0, 0, 0, 0.62);
-      border: 1px solid rgba(0, 0, 0, 0.08);
-    }
-
-    .quick-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 16px;
-    }
-
-    .quick-link {
-      min-height: 96px;
-      padding: 20px;
-      border-radius: 22px;
-      background: var(--panel-strong);
-      border: 1px solid var(--line);
+    .donate-btn {
+      display: block;
+      padding: 13px 24px;
+      border-radius: 4px;
       text-decoration: none;
-      color: inherit;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: white;
       text-align: center;
-      transition: transform 140ms ease, box-shadow 140ms ease;
+      background: var(--accent-deep);
+      transition: background 0.2s;
+    }
+    .donate-btn:hover { background: #a9c921; }
+    .donate-note {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.5);
+      text-align: center;
+      margin-top: 2px;
     }
 
-    .quick-link strong {
-      font-size: 1.35rem;
-      line-height: 1.2;
-    }
-
-
-    .footer-card {
-      padding: 18px 22px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      color: var(--muted);
+    .content-footer {
+      margin-top: 24px;
+      padding: 20px 24px;
+      text-align: center;
+      color: var(--text-mid);
       font-size: 0.95rem;
-      font-weight: 600;
     }
 
-    @media (max-width: 980px) {
-      .topbar {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-
-      .brand-block {
-        width: 100%;
-      }
-
-      .topbar-actions {
-        width: 100%;
-        justify-content: stretch;
-      }
-
-      .top-action {
-        flex: 1 1 220px;
-      }
-
-      .tool-grid,
-      .quick-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .tool-tile {
-        min-height: 220px;
-      }
-
-      .footer-card {
-        flex-direction: column;
-        align-items: flex-start;
-      }
+    @keyframes donate-hb {
+      0%, 100% { transform: scale(1); }
+      30% { transform: scale(1.18); }
+      60% { transform: scale(1.08); }
+    }
+    @keyframes donate-pulse {
+      0% { transform: scale(0.85); opacity: 0.6; }
+      100% { transform: scale(1.5); opacity: 0; }
     }
 
-    @media (max-width: 640px) {
-      body {
-        padding: 14px;
-      }
-
-      .topbar,
-      .section-card,
-      .footer-card {
-        border-radius: 22px;
-      }
-
-      .section-card {
-        padding: 18px;
-      }
-
-      .brand-block {
-        align-items: flex-start;
-      }
-
-      .brand-mark {
-        width: 74px;
-        height: 74px;
-      }
-
-      .top-action {
-        width: 100%;
-        min-width: 0;
-      }
-
-      .section-header {
-        align-items: flex-start;
+    @media (max-width: 960px) {
+      .nav-links { display: none; }
+      .nav-toggle { display: flex; }
+      .launch-grid,
+      .steps-grid { grid-template-columns: 1fr; }
+      .page { width: min(100% - 20px, 1120px); padding-top: 20px; padding-bottom: 28px; }
+      .hero, .card, .content-footer { border-radius: 24px; }
+      .hero, .card { padding: 22px; }
+      .donate-card {
         flex-direction: column;
+        text-align: center;
+        padding: 28px 22px;
+        gap: 24px;
       }
+      .donate-actions { min-width: unset; width: 100%; }
+      .donate-card p { max-width: unset; }
+    }
+
+    @media (max-width: 720px) {
+      .schedule-dialog { padding: 28px 20px 22px; }
+      .schedule-options { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
-  <main class="app-shell">
-    <header class="topbar">
-      <div class="brand-block">
-        <a class="brand-mark" href="./index.html" aria-label="Vestibular home">
-          <img src="https://striveptlv.com/logo.png" alt="STRIVE Physical Therapy logo" />
-        </a>
-        <div class="brand-copy">
-          <div class="eyebrow">STRIVE Physical Therapy Las Vegas</div>
-          <h1>Vestibular Tools</h1>
+  <nav aria-label="Primary">
+    <a href="./index.html" class="nav-logo">
+      <img src="https://striveptlv.com/logo.png" alt="STRIVE PT Logo" class="logo-img">
+      <div>
+        <div class="logo-text">STRIVE</div>
+        <div class="logo-sub">Physical Therapy · Las Vegas</div>
+      </div>
+    </a>
+
+    <div class="nav-links">
+      <a href="https://striveptlv.com/about.html">About</a>
+      <div class="nav-dropdown">
+        <a href="https://striveptlv.com/#services">Services</a>
+        <div class="dropdown-menu">
+          <a href="https://striveptlv.com/wellness.html">Wellness Classes</a>
+          <a href="https://striveptlv.com/stroke-rehab">Stroke Rehab</a>
+          <a href="https://striveptlv.com/sci.html">SCI Rehab</a>
+          <a href="https://striveptlv.com/vestibular-rehab.html">Vestibular Rehab</a>
+          <a href="https://striveptlv.com/fnd.html">FND Rehab</a>
         </div>
       </div>
-      <div class="topbar-actions">
-        <div class="theme-dock" aria-label="Theme">
-          <button type="button" class="theme-icon is-active" data-theme="device" aria-label="Follow device theme" title="Follow device">Auto</button>
-          <button type="button" class="theme-icon" data-theme="dark" aria-label="Dark theme" title="Dark theme">Dark</button>
-          <button type="button" class="theme-icon" data-theme="light" aria-label="Light theme" title="Light theme">Light</button>
+      <a href="https://striveptlv.janeapp.com" target="_blank" rel="noopener">Scheduling</a>
+      <div class="nav-dropdown">
+        <a href="#">Resources</a>
+        <div class="dropdown-menu">
+          <a href="https://open.spotify.com/show/2nbFBV45QpM37SAdHtobgF?si=Gns3Ft-7SgCNdGbmnOcpag" target="_blank" rel="noopener">Podcast</a>
+          <a href="https://striveptlv.com/insights">Articles</a>
         </div>
-        <a class="top-action primary" href="https://calendly.com/dpt-striveptlv/30min" target="_blank" rel="noopener">Book Consultation</a>
-        <a class="top-action secondary" href="https://striveptlv.com/" target="_blank" rel="noopener">Main Website</a>
       </div>
-    </header>
-
-    <section class="section-card">
-      <div class="section-header">
-        <h2>Exercise Launch</h2>
+      <div class="nav-dropdown">
+        <a href="#">Clinicians</a>
+        <div class="dropdown-menu">
+          <a href="https://striveptlv.com/moneymanagement/">OT Bank App</a>
+          <a href="./index.html">Vestibular App</a>
+        </div>
       </div>
-      <div class="tool-grid">
-        <a class="tool-tile primary" href="./vor/index.html">
-          <div class="tile-top">
-            <h3>Gaze Stability</h3>
-            <div class="tile-meta">VOR training</div>
-            <div class="tile-desc">Use head-movement drills to help keep vision clear while the head is moving.</div>
-          </div>
-          <div class="tile-action">Open</div>
-        </a>
+      <a href="#scheduling" data-schedule-trigger class="nav-book">Book Now</a>
+    </div>
 
-        <a class="tool-tile secondary" href="./smooth%20pursuits/index.html">
-          <div class="tile-top">
-            <h3>Eye Tracking</h3>
-            <div class="tile-meta">Tracking exercise</div>
-            <div class="tile-desc">Train the eyes to follow a moving target smoothly with less symptom flare.</div>
-          </div>
-          <div class="tile-action">Open</div>
-        </a>
+    <div class="nav-toggle" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
 
-        <a class="tool-tile tertiary" href="./saccades/index.html">
-          <div class="tile-top">
-            <h3>Saccades</h3>
-            <div class="tile-meta">Eye-shift exercise</div>
-            <div class="tile-desc">Train rapid center-to-side gaze shifts with graded targets, tempo changes, and post-task symptom tracking.</div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="./index.html" onclick="toggleMenu(false)">Home</a>
+    <a href="https://striveptlv.com/about.html" onclick="toggleMenu(false)">About</a>
+    <div class="mob-dropdown">
+      <div class="mob-dropdown-toggle" onclick="toggleMobileDropdown('servicesItems', this.querySelector('.mob-arrow'))">
+        Services <span class="mob-arrow">›</span>
+      </div>
+      <div class="mob-dropdown-items" id="servicesItems">
+        <a href="https://striveptlv.com/wellness.html" onclick="toggleMenu(false)">Wellness Classes</a>
+        <a href="https://striveptlv.com/stroke-rehab" onclick="toggleMenu(false)">Stroke Rehab</a>
+        <a href="https://striveptlv.com/sci.html" onclick="toggleMenu(false)">SCI Rehab</a>
+        <a href="https://striveptlv.com/vestibular-rehab.html" onclick="toggleMenu(false)">Vestibular Rehab</a>
+        <a href="https://striveptlv.com/fnd.html" onclick="toggleMenu(false)">FND Rehab</a>
+      </div>
+    </div>
+    <a href="https://striveptlv.janeapp.com" target="_blank" rel="noopener" onclick="toggleMenu(false)">Scheduling</a>
+    <div class="mob-dropdown">
+      <div class="mob-dropdown-toggle" onclick="toggleMobileDropdown('patientResourceItems', this.querySelector('.mob-arrow'))">
+        Resources <span class="mob-arrow">›</span>
+      </div>
+      <div class="mob-dropdown-items" id="patientResourceItems">
+        <a href="https://open.spotify.com/show/2nbFBV45QpM37SAdHtobgF?si=Gns3Ft-7SgCNdGbmnOcpag" target="_blank" rel="noopener">Podcast</a>
+        <a href="https://striveptlv.com/insights" onclick="toggleMenu(false)">Articles</a>
+      </div>
+    </div>
+    <div class="mob-dropdown">
+      <div class="mob-dropdown-toggle" onclick="toggleMobileDropdown('cliniciansItems', this.querySelector('.mob-arrow'))">
+        Clinicians <span class="mob-arrow">›</span>
+      </div>
+      <div class="mob-dropdown-items" id="cliniciansItems">
+        <a href="https://striveptlv.com/moneymanagement/" onclick="toggleMenu(false)">OT Bank App</a>
+        <a href="./index.html" onclick="toggleMenu(false)">Vestibular App</a>
+      </div>
+    </div>
+    <a href="#scheduling" data-schedule-trigger class="mob-book" onclick="toggleMenu(false)">Book Now</a>
+  </div>
+
+  <div class="schedule-modal" id="scheduleModal" aria-hidden="true">
+    <div class="schedule-dialog" role="dialog" aria-modal="true" aria-labelledby="scheduleTitle">
+      <button type="button" class="schedule-close" aria-label="Close scheduling options" data-schedule-close>&times;</button>
+      <div class="schedule-kicker">Scheduling</div>
+      <h2 id="scheduleTitle">Are you a new client or a returning client?</h2>
+      <p>Choose the option that matches where you are in the process, and we’ll send you to the right scheduling page.</p>
+      <div class="schedule-contact">Call/Text: 702 381 4197</div>
+      <div class="schedule-options">
+        <a href="https://calendly.com/dpt-striveptlv/30min" target="_blank" rel="noopener" class="schedule-option">
+          <div>
+            <div class="schedule-option-label">First Visit</div>
+            <h3>New Client</h3>
+            <p>Start with your free consultation so we can learn about your needs and confirm the best next step.</p>
           </div>
-          <div class="tile-action">Open</div>
+          <strong>Open Calendly</strong>
         </a>
+        <a href="https://striveptlv.janeapp.com" target="_blank" rel="noopener" class="schedule-option">
+          <div>
+            <div class="schedule-option-label">Ongoing Care</div>
+            <h3>Returning Client</h3>
+            <p>Use JaneApp if you are already established with STRIVE and need to book a follow-up visit.</p>
+          </div>
+          <strong>Open JaneApp</strong>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <main class="page">
+    <section class="hero">
+      <h1>STRIVE Vestibular App</h1>
+      <p class="lead">
+        STRIVE gives patients and families a simple way to open vestibular home exercises from one place.
+        It supports guided practice for gaze stability, eye tracking, and saccades while also giving
+        a clear, repeatable way to begin home exercise sessions with less setup friction.
+      </p>
+      <div class="launch-grid" aria-label="STRIVE homepage start action">
+        <div class="launch-card">
+        <a class="launch-link primary-start" href="./launch.html">Start Using STRIVE Vestibular Tool</a>
+        </div>
+      </div>
+
+      <div class="launch-grid" aria-label="Add STRIVE to iPad home screen">
+        <article class="card">
+        <h2>Add STRIVE To Home Screen</h2>
+        <p>
+          Save STRIVE on the iPad Home Screen so it opens like an app and is easier to find before each vestibular session.
+        </p>
+        <div class="steps-grid">
+          <div class="card step-card">
+            <div class="step-number">1</div>
+            <h3>Open Safari</h3>
+            <p>Open the STRIVE vestibular tool in Safari on the iPad.</p>
+          </div>
+          <div class="card step-card">
+            <div class="step-number">2</div>
+            <h3>Tap Share</h3>
+            <p>Press the Share button in the browser toolbar.</p>
+          </div>
+          <div class="card step-card">
+            <div class="step-number">3</div>
+            <h3>Add It</h3>
+            <p>Choose Add to Home Screen and rename it if you want.</p>
+          </div>
+          <div class="card step-card">
+            <div class="step-number">4</div>
+            <h3>Launch Fast</h3>
+            <p>Tap the new STRIVE icon from the Home Screen anytime.</p>
+          </div>
+        </div>
+        </article>
       </div>
     </section>
 
-    <section class="section-card">
-      <div class="section-header">
-        <h2>Quick Links</h2>
+    <aside class="donate-card">
+      <div class="donate-heart-wrap">
+        <div class="donate-pulse-ring"></div>
+        <div class="donate-pulse-ring-2"></div>
+        <div class="donate-heart-bg">
+          <svg class="donate-heart-svg" width="36" height="36" viewBox="0 0 24 24" fill="#b7d63b" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+        </div>
       </div>
-      <div class="quick-grid">
-        <a class="quick-link" href="https://striveptlv.com/moneymanagement/" target="_blank" rel="noopener">
-          <strong>Online Bill Pay Tool</strong>
-        </a>
-
-        <a class="quick-link" href="tel:7023814197">
-          <strong>Call STRIVE</strong>
-        </a>
-
-        <a class="quick-link" href="https://calendly.com/dpt-striveptlv/30min" target="_blank" rel="noopener">
-          <strong>Book Consultation</strong>
-        </a>
+      <div class="donate-text">
+        <h3>Help us keep this tool free.</h3>
+        <p>No paywalls, no subscriptions, no memberships. If this helped someone you love on their recovery journey, a small donation keeps it running for everyone who needs it.</p>
       </div>
-    </section>
+      <div class="donate-actions">
+        <a class="donate-btn" href="https://ko-fi.com/joshdpt" target="_blank" rel="noopener">Support on Ko-fi</a>
+        <p class="donate-note">No account needed · any amount welcome</p>
+      </div>
+    </aside>
 
-    <footer class="footer-card">
-      <span>© 2026 STRIVE Physical Therapy</span>
+    <footer class="content-footer">
+      Created by Strive Physical Therapy.<br>
+      © 2026 STRIVE Physical Therapy · Las Vegas, NV · All rights reserved.
     </footer>
   </main>
-  <script>
-    const themeButtons = [...document.querySelectorAll(".theme-icon")];
-    const deviceThemeQuery = window.matchMedia ? window.matchMedia("(prefers-color-scheme: light)") : null;
-    let currentThemeMode = "device";
 
-    function syncThemeButtons() {
-      themeButtons.forEach((button) => {
-        button.classList.toggle("is-active", button.dataset.theme === currentThemeMode);
+  <script>
+    const scheduleModal = document.getElementById('scheduleModal');
+    const scheduleTriggers = document.querySelectorAll('[data-schedule-trigger]');
+
+    function setScheduleModalState(isOpen) {
+      if (!scheduleModal) return;
+      scheduleModal.classList.toggle('open', isOpen);
+      scheduleModal.setAttribute('aria-hidden', String(!isOpen));
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    }
+
+    function openScheduleModal(event) {
+      if (event) event.preventDefault();
+      setScheduleModalState(true);
+    }
+
+    function closeScheduleModal() {
+      setScheduleModalState(false);
+    }
+
+    scheduleTriggers.forEach((trigger) => {
+      trigger.addEventListener('click', openScheduleModal);
+    });
+
+    if (scheduleModal) {
+      scheduleModal.addEventListener('click', (event) => {
+        if (event.target === scheduleModal || event.target.hasAttribute('data-schedule-close')) {
+          closeScheduleModal();
+        }
       });
     }
 
-    function applyTheme(mode = currentThemeMode) {
-      currentThemeMode = mode;
-      const resolvedTheme = mode === "device"
-        ? (deviceThemeQuery?.matches ? "light" : "dark")
-        : mode;
+    function toggleMenu(forceState) {
+      const menu = document.getElementById('mobileMenu');
+      const shouldOpen = typeof forceState === 'boolean'
+        ? forceState
+        : !menu.classList.contains('open');
 
-      document.body.dataset.theme = resolvedTheme;
-      syncThemeButtons();
+      menu.classList.toggle('open', shouldOpen);
+      document.body.classList.toggle('menu-open', shouldOpen);
     }
 
-    themeButtons.forEach((button) => {
-      button.addEventListener("click", () => applyTheme(button.dataset.theme));
+    function toggleMobileDropdown(itemsId, arrowEl) {
+      const dropdown = document.getElementById(itemsId);
+      if (!dropdown || !arrowEl) return;
+      dropdown.classList.toggle('open');
+      arrowEl.classList.toggle('open');
+    }
+
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 960) toggleMenu(false);
     });
 
-    if (deviceThemeQuery) {
-      const syncTheme = () => {
-        if (currentThemeMode === "device") {
-          applyTheme();
-        }
-      };
-
-      if (deviceThemeQuery.addEventListener) {
-        deviceThemeQuery.addEventListener("change", syncTheme);
-      } else if (deviceThemeQuery.addListener) {
-        deviceThemeQuery.addListener(syncTheme);
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        toggleMenu(false);
+        closeScheduleModal();
       }
-    }
-
-    applyTheme();
+    });
   </script>
 </body>
 </html>
