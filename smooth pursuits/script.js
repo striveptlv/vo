@@ -2,11 +2,40 @@ const WORD_BANK = [
   "focus", "steady", "follow", "target", "motion", "center", "vision", "smooth",
   "calm", "glide", "track", "orange", "teal", "silver", "anchor", "bright",
   "circle", "spring", "quiet", "align", "marker", "shadow", "signal", "ripple",
-  "planet", "thrive", "gentle", "bridge", "meadow", "stream"
+  "planet", "thrive", "gentle", "bridge", "meadow", "stream", "apple", "apron",
+  "badge", "baker", "basin", "beach", "beacon", "beech", "bison", "blaze",
+  "bloom", "branch", "breeze", "bronze", "cabin", "cactus", "camera", "candle",
+  "canyon", "carrot", "castle", "cedar", "chalk", "chime", "cinder", "cliff",
+  "cloud", "cobalt", "comet", "copper", "coral", "cotton", "crane", "creek",
+  "crisp", "crown", "dancer", "dawn", "desert", "drift", "ember", "engine",
+  "fabric", "falcon", "feather", "fern", "field", "flame", "flint", "forest",
+  "frost", "garden", "glassy", "golden", "harbor", "hazel", "helmet", "hollow",
+  "honey", "island", "jacket", "jungle", "kernel", "kitten", "ladder", "lagoon",
+  "lantern", "laurel", "lavish", "leader", "lemon", "lilac", "linen", "lizard",
+  "magnet", "mallow", "maple", "marble", "marine", "market", "marsh", "medal",
+  "mercury", "meteor", "mirror", "moss", "navy", "nickel", "oasis", "ocean",
+  "olive", "onyx", "orchid", "otter", "paddle", "palace", "peach", "pearl",
+  "pepper", "petal", "pickle", "pillar", "pillow", "pine", "plume", "pocket",
+  "pollen", "pond", "prism", "quartz", "quill", "rabbit", "radar", "rain",
+  "ravine", "reef", "resin", "ridge", "river", "rocket", "rose", "runner",
+  "sable", "sail", "saturn", "scarlet", "school", "scoop", "seed", "shale",
+  "shore", "signal", "sketch", "slate", "smile", "socket", "solar", "spruce",
+  "stable", "star", "stone", "storm", "summit", "sunset", "swan", "table",
+  "talon", "temple", "thistle", "throne", "timber", "tomato", "topaz", "torch",
+  "tower", "trail", "travel", "tulip", "tunnel", "turbo", "velvet", "violet",
+  "walnut", "willow", "window", "winter", "wisdom", "wood", "wool", "zebra",
+  "zenith", "acid", "adobe", "agate", "amber", "amuse", "angle", "antler",
+  "atlas", "aurora", "axiom", "banjo", "barrel", "bayou", "berry", "birch",
+  "bluff", "booth", "brass", "brick", "brook", "caper", "chest", "clover",
+  "coast", "crater", "denim", "eagle", "fable", "garnet", "grove", "helium",
+  "juniper", "khaki", "lotus", "mango", "nectar", "opal", "pebble", "pineal",
+  "plaza", "radish", "rocket", "saffron", "satin", "shadow", "sprout", "thrive",
+  "trout", "umber", "vessel", "wander", "whale", "yonder"
 ];
 
 const LETTER_BANK = "ABCDEFGHJKLMNPQRSTUVWXYZ";
 const TARGET_COLORS = ["#0c7a64", "#f2644c", "#3f88c5", "#ffb703", "#7b61ff", "#ef476f"];
+const SESSION_WORD_BANK = [...new Set(WORD_BANK)];
 
 const screens = {
   setup: document.getElementById("setup-screen"),
@@ -84,6 +113,8 @@ let setRating = null;
 let pendingSetResult = null;
 let activeLetter = LETTER_BANK[0];
 let activeLetterBucket = -1;
+let sessionWordPool = [];
+let sessionWordCursor = 0;
 let deviceThemeQuery = null;
 let currentThemeMode = "device";
 
@@ -173,7 +204,7 @@ function buildRatingGrid(container, mode) {
 }
 
 function goBackToTop() {
-  window.location.href = "../index.html";
+  window.location.href = "../launch.html";
 }
 
 function getConfig() {
@@ -209,6 +240,8 @@ function startSession() {
     patientRating = null;
     setRating = null;
     pendingSetResult = null;
+    sessionWordPool = shuffle([...SESSION_WORD_BANK]);
+    sessionWordCursor = 0;
     activeLetter = LETTER_BANK[Math.floor(Math.random() * LETTER_BANK.length)];
     activeLetterBucket = -1;
     updateRatingUI("set");
@@ -591,6 +624,8 @@ function resetSession() {
   patientRating = null;
   setRating = null;
   pendingSetResult = null;
+  sessionWordPool = [];
+  sessionWordCursor = 0;
   activeLetter = LETTER_BANK[0];
   activeLetterBucket = -1;
   trailLine.setAttribute("points", "");
@@ -618,7 +653,8 @@ function showScreen(name) {
 }
 
 function createWordSchedule(durationSeconds) {
-  const words = shuffle([...WORD_BANK]).slice(0, 20);
+  const requiredWords = Math.ceil(durationSeconds / 3) + 2;
+  const words = getSessionWords(requiredWords);
   const schedule = [];
   let cursor = 0;
   let wordIndex = 0;
@@ -634,6 +670,24 @@ function createWordSchedule(durationSeconds) {
   }
 
   return schedule;
+}
+
+function getSessionWords(count) {
+  if (sessionWordPool.length === 0) {
+    sessionWordPool = shuffle([...SESSION_WORD_BANK]);
+    sessionWordCursor = 0;
+  }
+
+  if (sessionWordCursor + count > sessionWordPool.length) {
+    const remaining = sessionWordPool.slice(sessionWordCursor);
+    const replenished = shuffle([...SESSION_WORD_BANK]).filter((word) => !remaining.includes(word));
+    sessionWordPool = [...remaining, ...replenished];
+    sessionWordCursor = 0;
+  }
+
+  const words = sessionWordPool.slice(sessionWordCursor, sessionWordCursor + count);
+  sessionWordCursor += count;
+  return words;
 }
 
 function getScheduledWord(elapsedSeconds) {

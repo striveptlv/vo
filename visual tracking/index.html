@@ -30,7 +30,7 @@
               <button type="button" class="theme-icon" data-theme="light" aria-label="Light theme" title="Light theme">Light</button>
             </div>
             <button id="back-to-top" class="hero-action secondary home-button" type="button" aria-label="Back to home">Home</button>
-            <a class="hero-action primary" href="https://calendly.com/dpt-striveptlv/30min" target="_blank" rel="noopener">Book Consultation</a>
+            <a class="hero-action primary" href="https://striveptlv.janeapp.com" target="_blank" rel="noopener">Book Consultation</a>
           </div>
         </div>
       </header>
@@ -45,7 +45,7 @@
         </div>
 
         <div class="setup-grid">
-          <label class="field span-2">
+          <label class="field slider-field">
             <span>Number of Balls</span>
             <div class="range-card">
               <input id="ball-count" type="range" min="3" max="18" step="1" value="8">
@@ -56,7 +56,7 @@
             </div>
           </label>
 
-          <label class="field span-2">
+          <label class="field slider-field">
             <span>Speed of Movement</span>
             <div class="range-card">
               <input id="speed" type="range" min="2" max="24" step="1" value="10">
@@ -67,18 +67,18 @@
             </div>
           </label>
 
-          <label class="field span-2">
+          <label class="field slider-field">
             <span>Time Completing Task</span>
             <div class="range-card">
               <input id="duration" type="range" min="10" max="90" step="5" value="30">
               <div class="range-meta">
                 <strong id="duration-value">30 seconds</strong>
-                <span>After a 5 second memorize phase</span>
+                <span>After a 3 second target-identify phase</span>
               </div>
             </div>
           </label>
 
-          <label class="field">
+          <label class="field option-field">
             <span>Distracting Background</span>
             <select id="background-mode">
               <option value="none">Minimal</option>
@@ -88,7 +88,7 @@
             </select>
           </label>
 
-          <label class="field">
+          <label class="field option-field">
             <span>Background Color</span>
             <select id="stage-background">
               <option value="black">Black</option>
@@ -96,7 +96,7 @@
             </select>
           </label>
 
-          <label class="field">
+          <label class="field option-field">
             <span>Colors</span>
             <select id="color-mode">
               <option value="same">Same Color</option>
@@ -105,17 +105,7 @@
             </select>
           </label>
 
-          <label class="field">
-            <span>Target Type</span>
-            <select id="target-type">
-              <option value="ball">Ball</option>
-              <option value="bird">Birds Flapping</option>
-              <option value="leaf">Leaves</option>
-              <option value="puck">Hockey Puck</option>
-            </select>
-          </label>
-
-          <label class="field">
+          <label class="field option-field">
             <span>Target Highlight</span>
             <select id="highlight-mode">
               <option value="on">Halo + Label On</option>
@@ -123,7 +113,7 @@
             </select>
           </label>
 
-          <label class="field">
+          <label class="field option-field">
             <span>Number of Sets</span>
             <select id="sets">
               <option value="1">1 set</option>
@@ -134,12 +124,12 @@
             </select>
           </label>
 
-          <label class="field">
+          <label class="field email-field">
             <span>Clinician Email</span>
             <input id="clinician-email" type="email" placeholder="optional@example.com">
           </label>
 
-          <label class="field">
+          <label class="field option-field">
             <span>Theme</span>
             <select id="theme">
               <option value="device">Device</option>
@@ -193,7 +183,6 @@
 
       <div id="exercise-stage" class="exercise-stage">
         <div class="background-overlay" aria-hidden="true"></div>
-        <div id="stage-message" class="stage-message">Track the highlighted target</div>
         <div id="mover-layer" class="mover-layer" aria-label="Visual tracking stage"></div>
       </div>
     </section>
@@ -205,7 +194,9 @@
             <p class="step-label">Tracking Result</p>
             <h2>Tap the original target</h2>
           </div>
-          <button id="confirm-selection" class="primary" type="button" disabled>Confirm Selection</button>
+          <div class="exercise-actions">
+            <button id="selection-fullscreen-button" class="secondary" type="button">Full Screen</button>
+          </div>
         </div>
 
         <div id="selection-stage" class="exercise-stage selection-stage">

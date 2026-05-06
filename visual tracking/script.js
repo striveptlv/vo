@@ -7,7 +7,7 @@ const TARGET_COLORS = [
   { fill: "#ff7daa", light: "#ffd7e4", dark: "#b63967" },
 ];
 
-const MEMORIZE_SECONDS = 5;
+const MEMORIZE_SECONDS = 3;
 
 const screens = {
   setup: document.getElementById("setup-screen"),
@@ -26,7 +26,6 @@ const controls = {
   backgroundMode: document.getElementById("background-mode"),
   stageBackground: document.getElementById("stage-background"),
   colorMode: document.getElementById("color-mode"),
-  targetType: document.getElementById("target-type"),
   highlightMode: document.getElementById("highlight-mode"),
   sets: document.getElementById("sets"),
   clinicianEmail: document.getElementById("clinician-email"),
@@ -46,7 +45,6 @@ const display = {
   liveSet: document.getElementById("live-set"),
   timeLeft: document.getElementById("time-left"),
   phaseLabel: document.getElementById("phase-label"),
-  stageMessage: document.getElementById("stage-message"),
   selectionMessage: document.getElementById("selection-message"),
   documentationOutput: document.getElementById("documentation-output"),
 };
@@ -56,8 +54,8 @@ const buttons = {
   finishEarly: document.getElementById("finish-early-button"),
   startSession: document.getElementById("start-session"),
   fullscreen: document.getElementById("fullscreen-button"),
+  selectionFullscreen: document.getElementById("selection-fullscreen-button"),
   endSession: document.getElementById("end-session"),
-  confirmSelection: document.getElementById("confirm-selection"),
   saveSetRating: document.getElementById("save-set-rating"),
   finishAfterRating: document.getElementById("finish-after-rating"),
   copyDocumentation: document.getElementById("copy-documentation"),
@@ -72,6 +70,7 @@ const moverLayer = document.getElementById("mover-layer");
 const selectionLayer = document.getElementById("selection-layer");
 const exerciseStage = document.getElementById("exercise-stage");
 const selectionStage = document.getElementById("selection-stage");
+const fullscreenRoot = document.querySelector(".app-shell");
 const setRatingGrid = document.getElementById("set-rating-grid");
 const clinicianRatingGrid = document.getElementById("clinician-rating-grid");
 const patientRatingGrid = document.getElementById("patient-rating-grid");
@@ -102,6 +101,7 @@ function initialize() {
   buildRatingGrid(patientRatingGrid, "patient");
   bindEvents();
   applyTheme();
+  syncFullscreenButtons();
   updatePreview();
 }
 
@@ -126,8 +126,8 @@ function bindEvents() {
   buttons.finishEarly.addEventListener("click", finishSession);
   buttons.startSession.addEventListener("click", startSession);
   buttons.fullscreen.addEventListener("click", requestFullScreen);
+  buttons.selectionFullscreen.addEventListener("click", requestSelectionFullScreen);
   buttons.endSession.addEventListener("click", endTrackingPhase);
-  buttons.confirmSelection.addEventListener("click", confirmSelection);
   buttons.saveSetRating.addEventListener("click", saveSetRating);
   buttons.finishAfterRating.addEventListener("click", finishAfterRating);
   buttons.copyDocumentation.addEventListener("click", copyDocumentation);
@@ -136,6 +136,7 @@ function bindEvents() {
   buttons.emailClinician.addEventListener("click", openPatientEmail);
   buttons.skipEmail.addEventListener("click", resetSession);
   buttons.restartFromPatient.addEventListener("click", resetSession);
+  document.addEventListener("fullscreenchange", syncFullscreenButtons);
 }
 
 function setupThemeListener() {
@@ -190,7 +191,7 @@ function getConfig() {
     backgroundMode: controls.backgroundMode.value,
     stageBackground: controls.stageBackground.value,
     colorMode: controls.colorMode.value,
-    targetType: controls.targetType.value,
+    targetType: "ball",
     highlightMode: controls.highlightMode.value,
     sets: Number(controls.sets.value),
     clinicianEmail: controls.clinicianEmail.value.trim(),
@@ -202,12 +203,12 @@ function updatePreview() {
   const config = getConfig();
   display.setNumber.textContent = String(Math.min(completedSets.length + 1, config.sets));
   display.setTotal.textContent = String(config.sets);
-  display.ballCountValue.textContent = `${config.ballCount} ${config.targetType === "ball" ? "balls" : "targets"}`;
+  display.ballCountValue.textContent = `${config.ballCount} balls`;
   display.speedValue.textContent = `${config.speed} / 24`;
   display.durationValue.textContent = `${config.duration} seconds`;
   buttons.finishEarly.disabled = completedSets.length === 0;
   display.setupPreview.textContent =
-    `${config.ballCount} ${formatTargetType(config.targetType).toLowerCase()}, speed ${config.speed}/24, ${config.duration} seconds of tracking after a ${MEMORIZE_SECONDS} second memorize phase, ${formatBackground(config.backgroundMode).toLowerCase()} distraction, ${formatStageBackground(config.stageBackground).toLowerCase()} stage, ${formatColorMode(config.colorMode).toLowerCase()}, target highlight ${config.highlightMode === "on" ? "on" : "off"}, ${config.sets} set${config.sets > 1 ? "s" : ""}.`;
+    `${config.ballCount} balls, speed ${config.speed}/24, ${config.duration} seconds of tracking after a ${MEMORIZE_SECONDS} second target-identify phase, ${formatBackground(config.backgroundMode).toLowerCase()} distraction, ${formatStageBackground(config.stageBackground).toLowerCase()} stage, ${formatColorMode(config.colorMode).toLowerCase()}, target highlight ${config.highlightMode === "on" ? "on" : "off"}, ${config.sets} set${config.sets > 1 ? "s" : ""}.`;
 }
 
 function startSession() {
@@ -236,7 +237,7 @@ function startCountdown() {
 
   display.countdownLabel.textContent = "Focus on the highlighted target first";
   display.countdownSummary.textContent =
-    `Set ${currentSetIndex + 1} of ${sessionConfig.sets}: ${sessionConfig.ballCount} ${formatTargetType(sessionConfig.targetType).toLowerCase()}, ${sessionConfig.duration} seconds, ${formatColorMode(sessionConfig.colorMode).toLowerCase()}.`;
+    `Set ${currentSetIndex + 1} of ${sessionConfig.sets}: identify the highlighted ball for ${MEMORIZE_SECONDS} seconds, then track it for ${sessionConfig.duration} seconds.`;
   display.countdownNumber.textContent = String(count);
   showScreen("countdown");
 
@@ -263,14 +264,12 @@ function beginExercise() {
   sessionStartTime = performance.now();
   memorizeMode = true;
   selectionChoiceId = null;
-  buttons.confirmSelection.disabled = true;
   display.liveSet.textContent = `${currentSetIndex + 1} / ${sessionConfig.sets}`;
   display.phaseLabel.textContent = "Memorize";
-  display.stageMessage.textContent = "Track the highlighted target";
   display.timeLeft.textContent = formatClock(sessionConfig.duration + MEMORIZE_SECONDS);
   applyBackgroundMode(exerciseStage, sessionConfig.backgroundMode);
   applyStageBackground(exerciseStage, sessionConfig.stageBackground);
-  applyHighlightMode(exerciseStage, sessionConfig.highlightMode);
+  applyHighlightMode(exerciseStage, "on");
   renderMovers(moverLayer, currentMovers, false);
   showScreen("exercise");
 
@@ -282,7 +281,7 @@ function beginExercise() {
     if (memorizeMode && elapsedSeconds >= MEMORIZE_SECONDS) {
       memorizeMode = false;
       display.phaseLabel.textContent = "Track";
-      display.stageMessage.textContent = "Keep following the same target";
+      applyHighlightMode(exerciseStage, "off");
       currentMovers.forEach((mover) => {
         mover.element?.classList.add("hide-target");
       });
@@ -425,16 +424,15 @@ function endTrackingPhase() {
   applyHighlightMode(selectionStage, sessionConfig.highlightMode);
   renderMovers(selectionLayer, currentMovers, true);
   selectionChoiceId = null;
-  buttons.confirmSelection.disabled = true;
   showScreen("selection");
 }
 
 function chooseSelection(moverId) {
   selectionChoiceId = moverId;
-  buttons.confirmSelection.disabled = false;
   [...selectionLayer.children].forEach((node) => {
     node.classList.toggle("selected", node === findSelectionNode(moverId));
   });
+  confirmSelection();
 }
 
 function confirmSelection() {
@@ -615,14 +613,28 @@ function openPatientEmail() {
 }
 
 async function requestFullScreen() {
-  if (!document.fullscreenElement && exerciseStage.requestFullscreen) {
-    await exerciseStage.requestFullscreen();
+  await toggleFullScreen();
+}
+
+async function requestSelectionFullScreen() {
+  await toggleFullScreen();
+}
+
+async function toggleFullScreen() {
+  if (!document.fullscreenElement && fullscreenRoot?.requestFullscreen) {
+    await fullscreenRoot.requestFullscreen();
     return;
   }
 
   if (document.exitFullscreen) {
     await document.exitFullscreen();
   }
+}
+
+function syncFullscreenButtons() {
+  const label = document.fullscreenElement ? "Exit Full Screen" : "Full Screen";
+  buttons.fullscreen.textContent = label;
+  buttons.selectionFullscreen.textContent = label;
 }
 
 function resetSession() {
@@ -640,7 +652,6 @@ function resetSession() {
   moverLayer.innerHTML = "";
   selectionLayer.innerHTML = "";
   animateMovers.lastTime = 0;
-  buttons.confirmSelection.disabled = true;
   buttons.saveSetRating.disabled = true;
   updateRatingUI("set");
   updateRatingUI("clinician");

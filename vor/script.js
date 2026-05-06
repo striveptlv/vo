@@ -140,7 +140,7 @@ function buildRatingButtons() {
 }
 
 function goBackToTop() {
-  window.location.href = "../index.html";
+  window.location.href = "../launch.html";
 }
 
 function updateSetupPreview() {
